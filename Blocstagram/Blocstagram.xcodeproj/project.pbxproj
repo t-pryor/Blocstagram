@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		225437421AD435BA00C73EE3 /* NOTES-MVC in Resources */ = {isa = PBXBuildFile; fileRef = 225437411AD435BA00C73EE3 /* NOTES-MVC */; };
+		225437451AD448D800C73EE3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 225437441AD448D800C73EE3 /* User.m */; };
+		225437481AD44A5C00C73EE3 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 225437471AD44A5C00C73EE3 /* Media.m */; };
+		2254374B1AD44F0500C73EE3 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254374A1AD44F0500C73EE3 /* Comment.m */; };
+		2254374E1AD44FFC00C73EE3 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254374D1AD44FFC00C73EE3 /* DataSource.m */; };
 		22AEC2F31AD3144000E08389 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC2F21AD3144000E08389 /* main.m */; };
 		22AEC2F61AD3144000E08389 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC2F51AD3144000E08389 /* AppDelegate.m */; };
 		22AEC2FE1AD3144000E08389 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC2FD1AD3144000E08389 /* Images.xcassets */; };
@@ -38,6 +42,14 @@
 
 /* Begin PBXFileReference section */
 		225437411AD435BA00C73EE3 /* NOTES-MVC */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NOTES-MVC"; sourceTree = "<group>"; };
+		225437431AD448D800C73EE3 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		225437441AD448D800C73EE3 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		225437461AD44A5C00C73EE3 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		225437471AD44A5C00C73EE3 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		225437491AD44F0500C73EE3 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		2254374A1AD44F0500C73EE3 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		2254374C1AD44FFC00C73EE3 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		2254374D1AD44FFC00C73EE3 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		22AEC2ED1AD3144000E08389 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22AEC2F11AD3144000E08389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22AEC2F21AD3144000E08389 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -101,15 +113,23 @@
 		22AEC2EF1AD3144000E08389 /* Blocstagram */ = {
 			isa = PBXGroup;
 			children = (
-				22AEC3161AD316DC00E08389 /* Images */,
 				22AEC2F41AD3144000E08389 /* AppDelegate.h */,
 				22AEC2F51AD3144000E08389 /* AppDelegate.m */,
 				22AEC32E1AD320C000E08389 /* ImagesTableViewController.h */,
 				22AEC32F1AD320C000E08389 /* ImagesTableViewController.m */,
 				22AEC2FD1AD3144000E08389 /* Images.xcassets */,
 				22AEC2FF1AD3144000E08389 /* LaunchScreen.xib */,
-				22AEC2F01AD3144000E08389 /* Supporting Files */,
 				225437411AD435BA00C73EE3 /* NOTES-MVC */,
+				225437431AD448D800C73EE3 /* User.h */,
+				225437441AD448D800C73EE3 /* User.m */,
+				225437461AD44A5C00C73EE3 /* Media.h */,
+				225437471AD44A5C00C73EE3 /* Media.m */,
+				225437491AD44F0500C73EE3 /* Comment.h */,
+				2254374A1AD44F0500C73EE3 /* Comment.m */,
+				2254374C1AD44FFC00C73EE3 /* DataSource.h */,
+				2254374D1AD44FFC00C73EE3 /* DataSource.m */,
+				22AEC3161AD316DC00E08389 /* Images */,
+				22AEC2F01AD3144000E08389 /* Supporting Files */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -267,7 +287,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				225437451AD448D800C73EE3 /* User.m in Sources */,
+				2254374B1AD44F0500C73EE3 /* Comment.m in Sources */,
+				225437481AD44A5C00C73EE3 /* Media.m in Sources */,
 				22AEC2F61AD3144000E08389 /* AppDelegate.m in Sources */,
+				2254374E1AD44FFC00C73EE3 /* DataSource.m in Sources */,
 				22AEC2F31AD3144000E08389 /* main.m in Sources */,
 				22AEC3301AD320C000E08389 /* ImagesTableViewController.m in Sources */,
 			);

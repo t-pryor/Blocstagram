@@ -7,10 +7,13 @@
 //
 
 #import "ImagesTableViewController.h"
+#import "DataSource.h"
+#import "Media.h"
+#import "User.h"
+#import "Comment.h"
+
 
 @interface ImagesTableViewController ()
-
-@property (nonatomic, strong) NSMutableArray *images;
 
 @end
 
@@ -21,7 +24,6 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.images = [NSMutableArray array];
     }
     return self;
 }
@@ -29,14 +31,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    for (int i = 1; i <= 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
-        UIImage *image = [UIImage imageNamed:imageName];
-        if (image) {
-            [self.images addObject:image];
-        }
-    }
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"imageCell"];
     
@@ -56,7 +50,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.images.count;
+    return [DataSource sharedInstance].mediaItems.count;
 }
 
 
@@ -102,8 +96,8 @@
         [cell.contentView addSubview:imageView];
     }
     
-    UIImage *image = self.images[indexPath.row];
-    imageView.image = image;
+    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    imageView.image = item.image;
     
     return cell;
 }
@@ -113,7 +107,9 @@
     // (widthOfTheScreen / widthOfThePicture) x heightOfThePicture = heightOfTheCell
     // for best performance, resize the image objects themselves to the exact size in which
     // they'll be displaed
-    UIImage *image = self.images[indexPath.row];
+    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    UIImage *image = item.image;
+    
     return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
 }
 
