@@ -1,0 +1,31 @@
+MVC
+
+Every class should be one, and only one of a model, a view, or a controller.
+The pattern defines not only the roles objects play in the application, it defines the way objects communicate with each other.
+Each of the three types of objects is separated from the others by abstract boundaries and communicates with objects of the other types across those boundearies.
+The collection of objects of a certain MVC type in an application is sometimes referred to as a layer (e.g. model layer)
+
+Views-mediate between users and controllers
+Controllers-mediate between views and models
+
+Terms originally defined by Reeskaug (Xerox PARC-79)
+
+Model
+"Models represent knowledge. A model could be a single object or it could be some structure of objects.
+e.g. NSString
+
+View
+"A view is a (visual) representation of its model. It would ordinarily highlight certain attributes of the model and suppress others. It is thus acting as a presentation filter"
+e.g. UILabel, UISlider, UIButton
+
+Controller
+A controller "provides the user with input by arranging for relevant views to present themselves in appropriate places on the screen. It provides means for user output by presenting the user with menus or other means of giving commands and data"
+e.g. UIViewController, UINavigationController
+
+Two additional notes:
+1.It's common for different controllers to communicate with each other. E.g. a UINavigationController must communicate with the view controllers it's displaying in order to determine what title and buttons to show in its Navigation Bar.
+2.There are controllers that aren't view controllers. e.g. you might write a controller that connects to the Internet and downloads data.
+
+Following the Model/View/Controller pattern helps you achieve the computer science design principle called separation of concerns, which says that software should be separated into parts with minimal functional overlap.
+
+

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		225437421AD435BA00C73EE3 /* NOTES-MVC in Resources */ = {isa = PBXBuildFile; fileRef = 225437411AD435BA00C73EE3 /* NOTES-MVC */; };
 		22AEC2F31AD3144000E08389 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC2F21AD3144000E08389 /* main.m */; };
 		22AEC2F61AD3144000E08389 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC2F51AD3144000E08389 /* AppDelegate.m */; };
 		22AEC2FE1AD3144000E08389 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC2FD1AD3144000E08389 /* Images.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		225437411AD435BA00C73EE3 /* NOTES-MVC */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NOTES-MVC"; sourceTree = "<group>"; };
 		22AEC2ED1AD3144000E08389 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22AEC2F11AD3144000E08389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22AEC2F21AD3144000E08389 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				22AEC2FD1AD3144000E08389 /* Images.xcassets */,
 				22AEC2FF1AD3144000E08389 /* LaunchScreen.xib */,
 				22AEC2F01AD3144000E08389 /* Supporting Files */,
+				225437411AD435BA00C73EE3 /* NOTES-MVC */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 			files = (
 				22AEC3291AD31F6900E08389 /* 9.jpg in Resources */,
 				22AEC3281AD31F6900E08389 /* 8.jpg in Resources */,
+				225437421AD435BA00C73EE3 /* NOTES-MVC in Resources */,
 				22AEC3241AD31F6900E08389 /* 4.jpg in Resources */,
 				22AEC3231AD31F6900E08389 /* 3.jpg in Resources */,
 				22AEC3261AD31F6900E08389 /* 6.jpg in Resources */,
@@ -448,6 +452,7 @@
 				22AEC3121AD3144000E08389 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		22AEC3131AD3144000E08389 /* Build configuration list for PBXNativeTarget "BlocstagramTests" */ = {
 			isa = XCConfigurationList;
@@ -456,6 +461,7 @@
 				22AEC3151AD3144000E08389 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
