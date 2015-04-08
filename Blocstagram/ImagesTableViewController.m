@@ -50,7 +50,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [DataSource sharedInstance].mediaItems.count;
+    
+    return [[self items] count];
 }
 
 
@@ -96,7 +97,7 @@
         [cell.contentView addSubview:imageView];
     }
     
-    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    Media *item = [self items][indexPath.row];
     imageView.image = item.image;
     
     return cell;
@@ -107,10 +108,14 @@
     // (widthOfTheScreen / widthOfThePicture) x heightOfThePicture = heightOfTheCell
     // for best performance, resize the image objects themselves to the exact size in which
     // they'll be displaed
-    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    Media *item = [self items][indexPath.row];
     UIImage *image = item.image;
     
     return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
+}
+
+- (NSArray *) items {
+    return [[DataSource sharedInstance] mediaItems];
 }
 
 /*

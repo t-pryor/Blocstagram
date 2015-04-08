@@ -24,10 +24,10 @@
 
 +(instancetype) sharedInstance
 {
-    static dispatch_once_t once;
+    static dispatch_once_t onceToken;
+    
     static id sharedInstance;
-    // ensure we only create a single instance of this class
-    dispatch_once(&once, ^{
+    dispatch_once(&onceToken, ^{
         sharedInstance = [[self alloc] init];
     });
     return sharedInstance;
