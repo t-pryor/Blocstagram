@@ -12,6 +12,8 @@
 		225437481AD44A5C00C73EE3 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 225437471AD44A5C00C73EE3 /* Media.m */; };
 		2254374B1AD44F0500C73EE3 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254374A1AD44F0500C73EE3 /* Comment.m */; };
 		2254374E1AD44FFC00C73EE3 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2254374D1AD44FFC00C73EE3 /* DataSource.m */; };
+		225437511AD4B7FB00C73EE3 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 225437501AD4B7FB00C73EE3 /* MediaTableViewCell.m */; };
+		225437531AD5309E00C73EE3 /* NOTES-UITableViewCell in Resources */ = {isa = PBXBuildFile; fileRef = 225437521AD5309E00C73EE3 /* NOTES-UITableViewCell */; };
 		22AEC2F31AD3144000E08389 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC2F21AD3144000E08389 /* main.m */; };
 		22AEC2F61AD3144000E08389 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC2F51AD3144000E08389 /* AppDelegate.m */; };
 		22AEC2FE1AD3144000E08389 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC2FD1AD3144000E08389 /* Images.xcassets */; };
@@ -28,6 +30,7 @@
 		22AEC3291AD31F6900E08389 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC31F1AD31F6900E08389 /* 9.jpg */; };
 		22AEC32A1AD31F6900E08389 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC3201AD31F6900E08389 /* 10.jpg */; };
 		22AEC3301AD320C000E08389 /* ImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC32F1AD320C000E08389 /* ImagesTableViewController.m */; };
+		22BDB2E91AD6CD1800A39EB9 /* X_MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB2E81AD6CD1800A39EB9 /* X_MediaTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +53,9 @@
 		2254374A1AD44F0500C73EE3 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
 		2254374C1AD44FFC00C73EE3 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		2254374D1AD44FFC00C73EE3 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		2254374F1AD4B7FB00C73EE3 /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
+		225437501AD4B7FB00C73EE3 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
+		225437521AD5309E00C73EE3 /* NOTES-UITableViewCell */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NOTES-UITableViewCell"; sourceTree = "<group>"; };
 		22AEC2ED1AD3144000E08389 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22AEC2F11AD3144000E08389 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22AEC2F21AD3144000E08389 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -72,6 +78,8 @@
 		22AEC3201AD31F6900E08389 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
 		22AEC32E1AD320C000E08389 /* ImagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagesTableViewController.h; path = ../ImagesTableViewController.h; sourceTree = "<group>"; };
 		22AEC32F1AD320C000E08389 /* ImagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagesTableViewController.m; path = ../ImagesTableViewController.m; sourceTree = "<group>"; };
+		22BDB2E71AD6CD1800A39EB9 /* X_MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = X_MediaTableViewCell.h; sourceTree = "<group>"; };
+		22BDB2E81AD6CD1800A39EB9 /* X_MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = X_MediaTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +138,9 @@
 				2254374D1AD44FFC00C73EE3 /* DataSource.m */,
 				22AEC3161AD316DC00E08389 /* Images */,
 				22AEC2F01AD3144000E08389 /* Supporting Files */,
+				2254374F1AD4B7FB00C73EE3 /* MediaTableViewCell.h */,
+				225437501AD4B7FB00C73EE3 /* MediaTableViewCell.m */,
+				225437521AD5309E00C73EE3 /* NOTES-UITableViewCell */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -139,6 +150,8 @@
 			children = (
 				22AEC2F11AD3144000E08389 /* Info.plist */,
 				22AEC2F21AD3144000E08389 /* main.m */,
+				22BDB2E71AD6CD1800A39EB9 /* X_MediaTableViewCell.h */,
+				22BDB2E81AD6CD1800A39EB9 /* X_MediaTableViewCell.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -267,6 +280,7 @@
 				22AEC3011AD3144000E08389 /* LaunchScreen.xib in Resources */,
 				22AEC3251AD31F6900E08389 /* 5.jpg in Resources */,
 				22AEC3271AD31F6900E08389 /* 7.jpg in Resources */,
+				225437531AD5309E00C73EE3 /* NOTES-UITableViewCell in Resources */,
 				22AEC3221AD31F6900E08389 /* 2.jpg in Resources */,
 				22AEC32A1AD31F6900E08389 /* 10.jpg in Resources */,
 				22AEC2FE1AD3144000E08389 /* Images.xcassets in Resources */,
@@ -287,8 +301,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22BDB2E91AD6CD1800A39EB9 /* X_MediaTableViewCell.m in Sources */,
 				225437451AD448D800C73EE3 /* User.m in Sources */,
 				2254374B1AD44F0500C73EE3 /* Comment.m in Sources */,
+				225437511AD4B7FB00C73EE3 /* MediaTableViewCell.m in Sources */,
 				225437481AD44A5C00C73EE3 /* Media.m in Sources */,
 				22AEC2F61AD3144000E08389 /* AppDelegate.m in Sources */,
 				2254374E1AD44FFC00C73EE3 /* DataSource.m in Sources */,

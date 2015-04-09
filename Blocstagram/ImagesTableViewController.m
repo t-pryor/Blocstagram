@@ -11,6 +11,7 @@
 #import "Media.h"
 #import "User.h"
 #import "Comment.h"
+#import "MediaTableViewCell.h"
 
 
 @interface ImagesTableViewController ()
@@ -32,7 +33,7 @@
 {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"imageCell"];
+    [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -57,48 +58,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    // takes the identifier string and compares it with its roster of registered table view cells
-    // Dequeue either returns a brand new cell of the type we registered
-    //  or a used one no longer visible on the screen
-    // Cells are recycled as they scroll off screen to preserve memory
-    // since our current cell may be used, we have to make sure to update all its information
-    // An index path (NSIndexPath) represents a series of indexes
-    // For table views, an NSIndexPath has two properties you use when writing table-related code: section and row
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell" forIndexPath:indexPath];
-    
-    
-    // set to an arbitrary number: make sure it is consistent
-    // a numerical tag can be attached to any UIView and used later to recover from its superview
-    // by invoking viewWithTag:.
-    static NSInteger imageViewTag = 1234;
-    UIImageView *imageView = (UIImageView *)[cell.contentView viewWithTag:imageViewTag];
-    
-    
-    // if we fail to recover a UIImageView
-    // so this is a brand new cell
-    if (!imageView) {
-        // This is a new cell, it doesn't have an image view yet
-        imageView = [[UIImageView alloc] init];
-        // image will be stretched both horizontally and vertically to fill the bounds of
-        // the UIImageView
-        imageView.contentMode = UIViewContentModeScaleToFill;
-        
-        // set its frame to be the same as teh UITableViewCell's contentView such that the image
-        // consumes the entirety of the cell
-        imageView.frame = cell.contentView.bounds;
-        
-        // autoresizingMask is associated with all UIView objets.
-        // This property lets its superview know how to resize it when the superview's width or height changes.
-        // These are called "bit-wise flags" and we set by OR-ing them together using |
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        
-        imageView.tag = imageViewTag;
-        [cell.contentView addSubview:imageView];
-    }
-    
-    Media *item = [self items][indexPath.row];
-    imageView.image = item.image;
+    MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaCell" forIndexPath:indexPath];
+    cell.mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+
     
     return cell;
 }
@@ -109,9 +71,10 @@
     // for best performance, resize the image objects themselves to the exact size in which
     // they'll be displaed
     Media *item = [self items][indexPath.row];
-    UIImage *image = item.image;
-    
-    return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
+    //UIImage *image = item.image;
+    //return 300 + (image.size.height / image.size.width * CGRectGetWidth(self.view.frame));
+    return [MediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
+
 }
 
 - (NSArray *) items {

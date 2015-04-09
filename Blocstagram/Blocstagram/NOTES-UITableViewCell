@@ -1,0 +1,17 @@
+
+UITableViewCell
+
+In a table cell, we don't add subviews to self, we add them to self.contentView
+A UITableViewCell supports accessory views, located on the right edge of a UITableViewCell
+You can display any one of these five types by setting the accessoryStyle property
+
+Editing Mode
+A table view may be entered into an "editing mode" by invoking setEditing:animated on UITableView
+
+CELL STYLING
+Attributed strings are neither string objects nor a subclass of NSString
+An NSAttributedString is more than a collection of characters: it also provides appearance attributes for those characters. (italicize, bold, colore etc)
+Attributed strings let us perform these rich-text modifications for presentation in iOS.
+
+
+
