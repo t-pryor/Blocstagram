@@ -27,6 +27,9 @@
 static UIFont *lightFont;
 static UIFont *boldFont;
 static UIColor *usernameLabelGray;
+// Assignment
+static UIColor *commentLabelOrange;
+static int cellCounter;
 static UIColor *commentLabelGray;
 static UIColor *linkColor;
 static NSParagraphStyle *paragraphStyle;
@@ -44,6 +47,9 @@ static NSParagraphStyle *paragraphStyle;
     boldFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11];
     usernameLabelGray = [UIColor colorWithRed:0.933 green:0.933 blue:0.933 alpha:1]; /*#eeeeee*/
     commentLabelGray = [UIColor colorWithRed:0.898 green:0.898 blue:0.898 alpha:1]; /*e5e5e5*/
+    // Assignment
+    commentLabelOrange = [UIColor orangeColor];
+    cellCounter = 0;
     linkColor = [UIColor colorWithRed:0.345 green:0.314 blue:0.424 alpha:1]; /*#58506d*/
     NSMutableParagraphStyle *mutableParagraphStyle = [[NSMutableParagraphStyle alloc] init];
     mutableParagraphStyle.headIndent = 20.0;
@@ -89,6 +95,8 @@ static NSParagraphStyle *paragraphStyle;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        cellCounter++;
+        NSLog(@"cell counter %i", cellCounter);
         self.mediaImageView = [[UIImageView alloc] init];
         self.usernameAndCaptionLabel = [[UILabel alloc] init];
         self.usernameAndCaptionLabel.numberOfLines = 0;
@@ -96,10 +104,17 @@ static NSParagraphStyle *paragraphStyle;
         
         self.commentLabel = [[UILabel alloc] init];
         self.commentLabel.numberOfLines = 0;
-        self.commentLabel.backgroundColor = commentLabelGray;
+        
+        if (cellCounter < 20) {
+            self.commentLabel.backgroundColor = commentLabelOrange;
+        } else {
+            self.commentLabel.backgroundColor = commentLabelGray;
+        }
+        
         for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel]) {
             [self.contentView addSubview:view];
         }
+        
     }
     return self;
 }
@@ -148,7 +163,7 @@ static NSParagraphStyle *paragraphStyle;
 
 - (NSAttributedString *) usernameAndCaptionString {
     CGFloat usernameFontSize = 15;
-    NSString *baseString = [NSString stringWithFormat:@"%@ %@", self.mediaItem.user.userName,
+    NSString *baseString = [NSString stringWithFormat:@"CC**:%i   %@ %@", cellCounter, self.mediaItem.user.userName,
                             self.mediaItem.caption];
     // Make an attributed string, with the "username" bold
     NSMutableAttributedString *mutableUsernameAndCaptionString =
@@ -171,7 +186,7 @@ static NSParagraphStyle *paragraphStyle;
     NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
     
     // commentString is a concatenation of every comment found for that particular media item
-    //
+    //ASSIGNMENT
     for (Comment *comment in self.mediaItem.comments) {
         // Make a string that says "username comment" followed by a line break
         NSString *baseString = [NSString stringWithFormat:@"%@ %@\n",
