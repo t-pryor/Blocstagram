@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *imageWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *commentLabelHeightConstraint;
 
@@ -94,6 +95,9 @@ static NSParagraphStyle *paragraphStyle;
             view.translatesAutoresizingMaskIntoConstraints = NO;
         }
         
+        
+        
+      
         // Each visual format string should begin with H: (horizontal) or V: (vertical)
         // | represents the superview and [someName] represents one view
         NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel);
@@ -103,7 +107,7 @@ static NSParagraphStyle *paragraphStyle;
                                           metrics:nil
                                           views:viewDictionary]];
         [self.contentView addConstraints:[NSLayoutConstraint
-                                          constraintsWithVisualFormat:@"H:|[_mediaImageView]|"
+                                          constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel]|"
                                           options:kNilOptions
                                           metrics:nil
                                           views:viewDictionary]];
@@ -127,6 +131,20 @@ static NSParagraphStyle *paragraphStyle;
                                                                  multiplier:1
                                                                    constant:100];
         self.imageHeightConstraint.identifier = @"Image height constraint";
+        
+        
+        // ***** Assignment *****
+        self.imageWidthConstraint = [NSLayoutConstraint constraintWithItem:_mediaImageView
+                                                                  attribute:NSLayoutAttributeWidth
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1
+                                                                   constant:100];
+        
+        self.imageWidthConstraint.identifier = @"Image width constraint";
+        
+        
         
         
         self.usernameAndCaptionLabelHeightConstraint =
@@ -170,8 +188,10 @@ static NSParagraphStyle *paragraphStyle;
     self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height + 20;
     self.commentLabelHeightConstraint.constant = commentLabelSize.height + 20;
     
-    // PROBLEM
-    self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width *CGRectGetWidth(self.contentView.bounds);
+    // ***** Assignment: comment out where we set the content of
+    // the imageHeight constraint to its correct height-we keep at the original 100 points
+    
+   // self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width *CGRectGetWidth(self.contentView.bounds);
     
     // Hide the line between cells
     self.separatorInset = UIEdgeInsetsMake(0, 0, 0, CGRectGetWidth(self.bounds));
