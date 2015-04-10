@@ -123,11 +123,10 @@
 			children = (
 				22AEC2F41AD3144000E08389 /* AppDelegate.h */,
 				22AEC2F51AD3144000E08389 /* AppDelegate.m */,
+				2254374F1AD4B7FB00C73EE3 /* MediaTableViewCell.h */,
+				225437501AD4B7FB00C73EE3 /* MediaTableViewCell.m */,
 				22AEC32E1AD320C000E08389 /* ImagesTableViewController.h */,
 				22AEC32F1AD320C000E08389 /* ImagesTableViewController.m */,
-				22AEC2FD1AD3144000E08389 /* Images.xcassets */,
-				22AEC2FF1AD3144000E08389 /* LaunchScreen.xib */,
-				225437411AD435BA00C73EE3 /* NOTES-MVC */,
 				225437431AD448D800C73EE3 /* User.h */,
 				225437441AD448D800C73EE3 /* User.m */,
 				225437461AD44A5C00C73EE3 /* Media.h */,
@@ -136,10 +135,11 @@
 				2254374A1AD44F0500C73EE3 /* Comment.m */,
 				2254374C1AD44FFC00C73EE3 /* DataSource.h */,
 				2254374D1AD44FFC00C73EE3 /* DataSource.m */,
+				225437411AD435BA00C73EE3 /* NOTES-MVC */,
+				22AEC2FF1AD3144000E08389 /* LaunchScreen.xib */,
+				22AEC2FD1AD3144000E08389 /* Images.xcassets */,
 				22AEC3161AD316DC00E08389 /* Images */,
 				22AEC2F01AD3144000E08389 /* Supporting Files */,
-				2254374F1AD4B7FB00C73EE3 /* MediaTableViewCell.h */,
-				225437501AD4B7FB00C73EE3 /* MediaTableViewCell.m */,
 				225437521AD5309E00C73EE3 /* NOTES-UITableViewCell */,
 			);
 			path = Blocstagram;

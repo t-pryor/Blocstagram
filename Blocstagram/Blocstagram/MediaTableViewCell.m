@@ -66,7 +66,8 @@ static NSParagraphStyle *paragraphStyle;
                                     reuseIdentifier:@"layoutCell"];
     
     layoutCell.frame = CGRectMake(0, 0, width, CGRectGetHeight(layoutCell.frame));
-    [layoutCell setNeedsLayout];
+    layoutCell.mediaItem = mediaItem;
+   // [layoutCell setNeedsLayout];
     [layoutCell layoutIfNeeded];
     
     
