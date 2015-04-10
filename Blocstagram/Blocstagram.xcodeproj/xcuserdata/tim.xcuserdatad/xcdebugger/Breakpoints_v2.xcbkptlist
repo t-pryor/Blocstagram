@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Blocstagram/MediaTableViewCell.m"
-            timestampString = "450300743.305011"
+            timestampString = "450354247.930144"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "-initWithStyle:reuseIdentifier:"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "+heightForMediaItem:width:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
