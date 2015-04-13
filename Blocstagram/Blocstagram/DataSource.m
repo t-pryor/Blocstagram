@@ -169,4 +169,13 @@
     [mutableArrayWithKVO removeObject:item];
 }
 
+-(void) changeIndexToZero:(NSUInteger)row {
+    NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+    id object = [mutableArrayWithKVO objectAtIndex:row];
+    [mutableArrayWithKVO removeObjectAtIndex:row];
+    [mutableArrayWithKVO insertObject:object atIndex:0];
+}
+
+
+
 @end
