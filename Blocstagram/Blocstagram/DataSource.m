@@ -11,12 +11,15 @@
 #import "Media.h"
 #import "Comment.h"
 
-@interface DataSource ()
-
 // this property can only be modified by the DataSource instance
 // Instnces of other classes can only read from it
-@property (nonatomic, strong) NSArray *mediaItems;
 
+@interface DataSource () {
+
+    //@property (nonatomic, strong) NSArray *mediaItems;
+    // An array must be accessible as an instance variable named _<key> or by a method named -<key>
+    NSMutableArray *_mediaItems;
+}
 @end
 
 
@@ -78,7 +81,9 @@
         }
     }
     
-    self.mediaItems = randomMediaItems;
+    // Ask Steve
+    //self.mediaItems = randomMediaItems;
+    _mediaItems = randomMediaItems;
 }
 
 -(User *) randomUser
@@ -131,5 +136,37 @@
     return [NSString stringWithString:s];
 }
 
+#pragma mark - Key/Value Observing
+
+- (NSUInteger) countOfMediaItems{
+    return self.mediaItems.count;
+}
+
+- (id) objectInMediaItemsAtIndex:(NSUInteger)index {
+    return [self.mediaItems objectAtIndex:index];
+}
+
+- (NSArray *) mediaItemsAtIndexes:(NSIndexSet *)indexes {
+    return [self.mediaItems objectsAtIndexes:indexes];
+}
+
+- (void) insertObject:(Media *)object inMediaItemsAtIndex:(NSUInteger)index {
+    [_mediaItems insertObject:object atIndex:index];
+}
+
+-(void) removeObjectFromMediaItemsAtIndex:(NSUInteger)index {
+    [_mediaItems removeObjectAtIndex:index];
+}
+
+-(void) replaceObjectInMediaItemsAtIndex:(NSUInteger)index withObject:(id)object {
+    [_mediaItems replaceObjectAtIndex:index withObject:object];
+}
+
+// why not remove the item from our underlying data source without going through KVC methods?
+// if not, no objects (including ImagesTableViewController) will receive a KVO notification
+-(void) deleteMediaItem:(Media *) item {
+    NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+    [mutableArrayWithKVO removeObject:item];
+}
 
 @end

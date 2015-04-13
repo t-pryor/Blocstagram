@@ -103,7 +103,7 @@ static NSParagraphStyle *paragraphStyle;
                                           metrics:nil
                                           views:viewDictionary]];
         [self.contentView addConstraints:[NSLayoutConstraint
-                                          constraintsWithVisualFormat:@"H:|[_mediaImageView]|"
+                                          constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel]|"
                                           options:kNilOptions
                                           metrics:nil
                                           views:viewDictionary]];
@@ -167,11 +167,20 @@ static NSParagraphStyle *paragraphStyle;
     CGSize usernameLabelSize = [self.usernameAndCaptionLabel sizeThatFits:maxSize];
     CGSize commentLabelSize = [self.commentLabel sizeThatFits:maxSize];
     
-    self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height + 20;
-    self.commentLabelHeightConstraint.constant = commentLabelSize.height + 20;
+    self.usernameAndCaptionLabelHeightConstraint.constant =
+        usernameLabelSize.height == 0 ? 0 : usernameLabelSize.height + 20;
     
-    // PROBLEM
-    self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width *CGRectGetWidth(self.contentView.bounds);
+    self.commentLabelHeightConstraint.constant =
+        commentLabelSize.height == 0 ? 0 : commentLabelSize.height + 20;
+    
+    if (self.mediaItem.image.size.width > 0 && CGRectGetWidth(self.contentView.bounds) > 0) {
+        self.imageHeightConstraint.constant = self.mediaItem.image.size.height /
+        self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+    } else {
+        self.imageHeightConstraint.constant = 0;
+    }
+    
+    
     
     // Hide the line between cells
     self.separatorInset = UIEdgeInsetsMake(0, 0, 0, CGRectGetWidth(self.bounds));
