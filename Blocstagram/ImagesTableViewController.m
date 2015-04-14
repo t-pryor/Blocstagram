@@ -35,6 +35,10 @@
     
     [[DataSource sharedInstance] addObserver:self forKeyPath:@"mediaItems" options:0 context:nil];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
+    
+    
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
     
     
@@ -143,6 +147,37 @@
 - (NSArray *) items {
     return [[DataSource sharedInstance] mediaItems];
 }
+
+- (void) refreshControlDidFire:(UIRefreshControl *) sender {
+    [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
+        [sender endRefreshing];
+    }];
+}
+
+// checks whether or not the user has scrolled to the last photo
+// inspect an array of NSIndexPath objects which represent the cells visible on the screen
+
+
+- (void) infiniteScrollIfNecessary
+{
+    // call lastObject on the NSArray returned by indexPathsForVisibleRows to recover the
+    // index path of the cell shown at the bottom of the table
+    NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
+    if (bottomIndexPath && bottomIndexPath.row == [[[DataSource sharedInstance] mediaItems] count] -1 ) {
+        // The very last cell is on screen
+        [[DataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
+    }
+}
+
+#pragma mark - UIScrollViewDelegate
+// This delegate method is invoked when the scroll view is scrolled in any direction
+// As the user scrolls the table view, this method is called repeatedly
+// good place to check whether the last image in our array has made it onto the screen
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self infiniteScrollIfNecessary];
+}
+
 
 /*
 // Override to support conditional editing of the table view.

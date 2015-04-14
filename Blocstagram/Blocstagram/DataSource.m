@@ -19,8 +19,14 @@
     //@property (nonatomic, strong) NSArray *mediaItems;
     // An array must be accessible as an instance variable named _<key> or by a method named -<key>
     NSMutableArray *_mediaItems;
+
 }
+
+@property (nonatomic, assign) BOOL isRefreshing;
+@property (nonatomic, assign) BOOL isLoadingOlderItems;
+
 @end
+
 
 
 @implementation DataSource
@@ -168,5 +174,59 @@
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
     [mutableArrayWithKVO removeObject:item];
 }
+
+-(void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler
+{
+    if (self.isRefreshing == NO) {
+        self.isRefreshing = YES;
+        
+        // create new random media object and append it to the front of the KVC array
+        // place at front of array
+        Media *media = [[Media alloc] init];
+        media.user = [self randomUser];
+        media.image = [UIImage imageNamed:@"10.jpg"];
+        media.caption = [self randomSentence];
+        
+        
+        // this code will be changed to access Instagram API
+        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+        [mutableArrayWithKVO insertObject:media atIndex:0];
+        
+        // reset isRefreshing to NO since no longer in the process of refreshing
+        self.isRefreshing = NO;
+        
+        // check if a completion handler was passed before calling it with nil
+        // Do not provide an NSError because creating a fake, local piece of data like media
+        // rarely results an error
+        // NSError will be employed once we begin communicating with Instagram
+        if (completionHandler) {
+            completionHandler(nil);
+        }
+        
+        
+    }
+}
+
+-(void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler
+{
+    if (self.isLoadingOlderItems == NO) {
+        self.isLoadingOlderItems = YES;
+        Media *media = [[Media alloc] init];
+        media.user = [self randomUser];
+        media.image = [UIImage imageNamed:@"3.jpg"];
+        media.caption = [self randomSentence];
+        
+        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+        [mutableArrayWithKVO addObject:media];
+        
+        self.isLoadingOlderItems = NO;
+        
+        if (completionHandler) {
+            completionHandler(nil);
+        }
+    }
+}
+
+
 
 @end
