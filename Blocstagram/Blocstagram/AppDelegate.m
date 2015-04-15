@@ -8,6 +8,11 @@
 
 #import "AppDelegate.h"
 #import "ImagesTableViewController.h"
+#import "LoginViewController.h"
+#import "DataSource.h"
+
+
+
 
 @interface AppDelegate ()
 
@@ -15,15 +20,35 @@
 
 @implementation AppDelegate
 
+// At launch, show the login controller
+// Register for the LoginViewCon.. notification
+// When this notification posts, switch the root view controller from the login controller to the table controller
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[ImagesTableViewController alloc] init]];
-    // Override point for customization after application launch.
+    [DataSource sharedInstance]; // create the data source (so it can receive the access token notification)
+    UINavigationController *navVC = [[UINavigationController alloc] init];
+    LoginViewController *loginVC = [[LoginViewController alloc] init];
+    //set one and only VC to loginVC
+    [navVC setViewControllers:@[loginVC] animated:YES];
+    
+    // In LoginVC, webView:shouldStartLoadWithRequest:, notification is posted
+    [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification *note) {
+            ImagesTableViewController *imagesVC = [[ImagesTableViewController alloc] init];
+            [navVC setViewControllers:@[imagesVC] animated:YES];
+        }
+    ];
+    
+    self.window.rootViewController = navVC;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

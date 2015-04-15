@@ -10,6 +10,7 @@
 #import "User.h"
 #import "Media.h"
 #import "Comment.h"
+#import "LoginViewController.h"
 
 // this property can only be modified by the DataSource instance
 // Instnces of other classes can only read from it
@@ -22,16 +23,15 @@
 
 }
 
+@property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isLoadingOlderItems;
 
 @end
 
-
-
 @implementation DataSource
 
-+(instancetype) sharedInstance
++ (instancetype)sharedInstance
 {
     static dispatch_once_t onceToken;
     
@@ -42,105 +42,41 @@
     return sharedInstance;
 }
 
--(instancetype) init
++ (NSString *)instagramClientID
+{
+    return @"078a06d137a144f3afd319678bea3e07";
+}
+
+- (instancetype)init
 {
     self = [super init];
     
     if (self) {
-        [self addRandomData];
+        [self registerForAccessTokenNotification];
     }
     
     return self;
 }
 
-// load every placeholder image in our app
-// creates a Media model for it
-// attaches a randomly generated User to it
-// adds a random caption
-// attaches a randomly generated number of Comments to it
-// puts each media item into the mediaItems aray
--(void) addRandomData
+- (void)registerForAccessTokenNotification
 {
-    NSMutableArray *randomMediaItems = [NSMutableArray array];
-    for (int i = 0; i < 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
-        UIImage *image = [UIImage imageNamed:imageName];
+    // block will run after getting notification
+    // object passed in the notification is an NSString containing the access token, store it in self.accessToken
+    // when it arrives
+    // Normally you would also unregister(removeObserver:..) for notifications in dealloc
+    // Since DataSource is a singleton it will never get deallocated
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        self.accessToken = note.object;
         
-        if (image) {
-            Media *media = [[Media alloc] init];
-            media.user = [self randomUser];
-            media.image = image;
-            media.caption = [self randomSentence];
-            
-            NSUInteger commentCount = arc4random_uniform(10);
-            NSMutableArray *randomComments = [NSMutableArray array];
-            
-            for (int i = 0; i <= commentCount; i++) {
-                Comment *randomComment = [self randomComment];
-                [randomComments addObject:randomComment];
-            }
+        // Got a token; populate the initial data
+        [self populateDataWithParameters:nil];
         
-            media.comments = randomComments;
-        
-            [randomMediaItems addObject:media];
-    
-        }
-    }
-    
-    // Ask Steve
-    //self.mediaItems = randomMediaItems;
-    _mediaItems = randomMediaItems;
+    }];
 }
 
--(User *) randomUser
-{
-    User *user = [[User alloc] init];
-    
-    user.userName = [self randomStringOfLength:arc4random_uniform(10)];
-    
-    NSString *firstName = [self randomStringOfLength:arc4random_uniform(7)];
-    
-    NSString *lastName = [self randomStringOfLength:arc4random_uniform(12)];
-    user.fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-    
-    return user;
-}
 
-- (Comment *) randomComment {
-    Comment *comment = [[Comment alloc] init];
-    
-    comment.from = [self randomUser];
-    comment.text = [self randomSentence];
-    
-    return comment;
-}
 
-- (NSString *) randomSentence
-{
-    NSUInteger wordCount = arc4random_uniform(20);
-    
-    NSMutableString *randomSentence = [[NSMutableString alloc] init];
-    
-    for (int i = 0; i < wordCount; i++) {
-        NSString *randomWord = [self randomStringOfLength:arc4random_uniform(12)];
-        [randomSentence appendFormat:@"%@ ", randomWord];
-    }
-    
-    return randomSentence;
-}
-
--(NSString *) randomStringOfLength:(NSUInteger) len {
-    NSString *alphabet = @"abcdefghijklmnopqrstuvwxyz";
-    
-    NSMutableString *s = [NSMutableString string];
-    for (NSUInteger i = 0U; i < len; i++) {
-        u_int32_t r = arc4random_uniform((u_int32_t)[alphabet length]);
-        unichar c = [alphabet characterAtIndex:r];
-        [s appendFormat:@"%C", c];
-    }
-    
-    return [NSString stringWithString:s];
-}
 
 #pragma mark - Key/Value Observing
 
@@ -180,17 +116,8 @@
     if (self.isRefreshing == NO) {
         self.isRefreshing = YES;
         
-        // create new random media object and append it to the front of the KVC array
-        // place at front of array
-        Media *media = [[Media alloc] init];
-        media.user = [self randomUser];
-        media.image = [UIImage imageNamed:@"10.jpg"];
-        media.caption = [self randomSentence];
+        // TODO: Add images
         
-        
-        // this code will be changed to access Instagram API
-        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-        [mutableArrayWithKVO insertObject:media atIndex:0];
         
         // reset isRefreshing to NO since no longer in the process of refreshing
         self.isRefreshing = NO;
@@ -211,13 +138,8 @@
 {
     if (self.isLoadingOlderItems == NO) {
         self.isLoadingOlderItems = YES;
-        Media *media = [[Media alloc] init];
-        media.user = [self randomUser];
-        media.image = [UIImage imageNamed:@"3.jpg"];
-        media.caption = [self randomSentence];
-        
-        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-        [mutableArrayWithKVO addObject:media];
+      
+        //TODO: Add images
         
         self.isLoadingOlderItems = NO;
         
@@ -226,6 +148,66 @@
         }
     }
 }
+
+- (void)populateDataWithParameters:(NSDictionary *)parameters
+{
+    if (self.accessToken) {
+        // only try to get the data if there's an access token
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            // do the network request in the background, so the UI doesn't lockup
+            
+            NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
+            
+            for (NSString *parameterName in parameters) {
+                // for ex, if dictionary contains {count: 50}, append '&count=50' to the URL
+                [urlString appendFormat:@"&%@=%@", parameterName, parameters[parameterName]];
+            }
+            
+            NSURL *url = [NSURL URLWithString:urlString];
+            
+            if (url) {
+                NSURLRequest *request = [NSURLRequest requestWithURL:url];
+                NSURLResponse *response;
+                NSError *webError;
+                
+                //NSURLConnection returns an NSData object
+                ///but it also wants to communicate other information about the response (NSURLResponse)
+                // and possibly an error, if something went wrong (NSError)
+                // Since ObjC can only return one method, we pass in addresses of other vars as args
+                // and the method sets them. AKA "vending"
+                // this method returns an NSData and vends an NSURLRequest and an NSError
+                NSData *responseData = [NSURLConnection sendSynchronousRequest:request
+                                                             returningResponse:&response
+                                                                         error:&webError];
+                if (responseData) {
+                    NSError *jsonError;
+                    NSDictionary *feedDictionary = [NSJSONSerialization
+                                                    JSONObjectWithData:responseData
+                                                    options:0
+                                                    error:&jsonError];
+                    if (feedDictionary) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            //done networking, go back to main thread
+                            [self parseDataFromFeedDictionary:feedDictionary
+                                    fromRequestWithParameters:parameters];
+                        });
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        });
+    }
+}
+
+
+- (void)parseDataFromFeedDictionary:(NSDictionary *)feedDictionary fromRequestWithParameters:(NSDictionary *)parameters {
+    NSLog(@"%@", feedDictionary);
+}
+
 
 
 
