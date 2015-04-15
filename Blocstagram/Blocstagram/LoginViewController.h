@@ -14,4 +14,6 @@
 // an access token is obtained will use this string
 extern NSString *const LoginViewControllerDidGetAccessTokenNotification;
 
+//- (void)goToInstagramLoginPage;
+
 @end

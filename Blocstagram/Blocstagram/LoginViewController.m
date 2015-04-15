@@ -18,6 +18,41 @@
 
 @implementation LoginViewController
 
+- (instancetype) init
+{
+    self = [super init];
+    
+    if (self) {
+        UINavigationItem *navItem = self.navigationItem;
+        navItem.title = @"Login";
+        UIBarButtonItem *bbi = [[UIBarButtonItem alloc]
+                                    initWithTitle:@"Home"
+                                    style:UIBarButtonItemStylePlain
+                                    target:self
+                                    action:@selector(goToInstagramLoginPage)];
+        
+        navItem.leftBarButtonItem = bbi;
+
+    }
+    return self;
+}
+
+- (void) goToInstagramLoginPage
+// Called in viewDidLoad and when Home navbar button pressed
+
+{
+    NSString *urlString = [NSString
+                           stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token",
+                           [DataSource instagramClientID], [self redirectURI]];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    if (url) {
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [self.webView loadRequest:request];
+    }
+}
+
 // make string equal to name: convention, not necessary
 NSString *const LoginViewControllerDidGetAccessTokenNotification =
                     @"LoginViewControllerDidGetAccessTokenNotification";
@@ -36,18 +71,26 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification =
     [[self view] addSubview:webView];
     self.webView = webView;
     
-    self.title = NSLocalizedString(@"Login", @"Login");
+    //self.title = NSLocalizedString(@"Login", @"Login");
+    [self goToInstagramLoginPage];
+ 
     
-    NSString *urlString = [NSString
-                           stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token",
-                           [DataSource instagramClientID], [self redirectURI]];
-    
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    if (url) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [self.webView loadRequest:request];
-    }
+ /* ASSIGNMENT: 
+  Replaced rest of method with goToInstagramLoginPage method
+  It is called here and when Home button pressed
+  DRY principal
+  */
+
+    //    NSString *urlString = [NSString
+//                           stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token",
+//                           [DataSource instagramClientID], [self redirectURI]];
+//    
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    
+//    if (url) {
+//        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//        [self.webView loadRequest:request];
+//    }
 
 }
 
