@@ -12,7 +12,7 @@
 // using typedef to define a block which we can reuse as a parameter in multiple methods
 
 typedef void (^NewItemCompletionBlock)(NSError *error);
-
+//typedef return_type (^blockName)(var_type);
 
 @interface DataSource : NSObject
 
@@ -25,6 +25,8 @@ typedef void (^NewItemCompletionBlock)(NSError *error);
 + (NSString *) instagramClientID;
 - (void) deleteMediaItem:(Media *)item;
 - (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
-- (void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
+//- (void)requestNewItemsWithCompletionHandler:(void (^)(NSError *error))NewItemCompletionBlock;
+-(void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
+//- (void) requestOldItemsWithCompletionHandler:(void (^)(NSError *error))NewItemCompletionBlock;
 
 @end

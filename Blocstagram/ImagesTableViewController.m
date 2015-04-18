@@ -38,7 +38,6 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
     
-    
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
     
     
@@ -140,6 +139,17 @@
         // Delete the row from the data source
         Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
         [[DataSource sharedInstance] deleteMediaItem:item];
+    }
+}
+
+
+- (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    if (item.image) {
+        return 350;
+    } else {
+        return 150;
     }
 }
 

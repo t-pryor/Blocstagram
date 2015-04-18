@@ -29,7 +29,7 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification =
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self clearInstagramCookies];
+    [self clearInstagramCookies];
     UIWebView *webView = [[UIWebView alloc] init];
     webView.delegate = self;
     
