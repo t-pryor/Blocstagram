@@ -11,7 +11,7 @@
 // generally poor practice to import custom classes inside a header file
 @class User;
 
-@interface Media : NSObject
+@interface Media : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *idNumber;
 @property (nonatomic, strong) User *user;
