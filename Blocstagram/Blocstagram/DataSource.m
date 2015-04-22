@@ -269,15 +269,9 @@
     // feedDictionary[@"data"] is an array containing data about an individual picture
     // each element in the mediaArray is a Dictionary
     NSArray *mediaArray = feedDictionary[@"data"];
-   
-    
-  for (int i = 0; i < mediaArray.count; i++) {
-        NSLog(@"****************************");
-        NSLog(@" MEDIA ARRAY index %d: %@", i, [mediaArray objectAtIndex:i]);
-      
-  }
     
     NSMutableArray *tmpMediaItems = [NSMutableArray array];
+  
     for (NSDictionary *mediaDictionary in mediaArray) {
         Media *mediaItem = [[Media alloc] initWithDictionary:mediaDictionary];
         
@@ -286,6 +280,7 @@
             [self downloadImageForMediaItem:mediaItem]; // inefficient, downloads images simultaneously, will replace
         }
     }
+    
     
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
     
