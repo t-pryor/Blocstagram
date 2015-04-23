@@ -31,6 +31,16 @@
 
 #pragma mark - NSCoding
 
+// the purpose of the key used when encoding is to retrieve the encoded value when this
+// BNRItem is loaded from the filesystem later.
+// Objects being loaded from an archive are sent the message initWithCoder:
+// This method should grab all of the object that were encoded in encodeWithCoder:
+// and assign them the appropriate instance variable
+
+// NSCoder argument
+// in initWithCoder:, the NSCoder is full of data to be consumed by the User object being initialized
+// initWithCoder is not part of the initializer chain design pattern
+
 - (instancetype) initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
@@ -45,6 +55,8 @@
     return self;
 }
 
+// By convention, the key is the name of the property being encoded
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.idNumber forKey:NSStringFromSelector(@selector(idNumber))];
@@ -55,6 +67,7 @@
                                             NSStringFromSelector(@selector(profilePictureURL))];
     
 }
+
 
 
 @end

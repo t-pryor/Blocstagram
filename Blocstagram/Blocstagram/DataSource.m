@@ -66,6 +66,12 @@
             ^{
                 //find the file at the path and convert to an array
                 NSString *fullPath = [self pathForFilename:NSStringFromSelector(@selector(mediaItems))];
+                
+                // creates and instance of NSKeyedUnarchiver and load the archive located at the path into that instance
+                // We created this archive with a root object of type NSArray, so this is stored as this type
+                // newly allocated NSArray then sent initWithCoder: and NSKeyedUnarchiver passed as the argument
+                // The array then starts decoding its content from the NSKeyedUnarchiver and sends each of
+                // these objects the message initWithCoder:, passing the same NSKeyedArchiver
                 NSArray *storedMediaItems = [NSKeyedUnarchiver unarchiveObjectWithFile:fullPath];
                 dispatch_async(dispatch_get_main_queue(),
                 ^{
@@ -373,7 +379,10 @@
     }
 }
 
-// creates a string containing an absolute path to the user's documents directory
+// creates a string containing an absolute path to the user's Library/Caches directory
+// this data can be very large and extend the time it takes to synchronize your device
+// can be redownloaded
+
 
 - (NSString *)pathForFilename:(NSString *)filename
 {
