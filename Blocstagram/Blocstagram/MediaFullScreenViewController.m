@@ -15,6 +15,9 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 
+// Assignment
+@property (nonatomic, weak) UIButton *shareButton;
+
 @end
 
 @implementation MediaFullScreenViewController
@@ -65,6 +68,19 @@
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
     
+    
+    // **** Assignment ****
+    self.shareButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.shareButton setTitle:NSLocalizedString(@"Share", "Share") forState:UIControlStateNormal];
+    [self.shareButton addTarget:self action:@selector(sharePressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.shareButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    [self.shareButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
+    
+    [self.view addSubview:self.shareButton];
+    
+    
+    
 }
 
 
@@ -98,6 +114,13 @@
     // maximumZoomScale will always be 1 (100%)
     // if bigger, image would get pixelated if user zooms too much
     self.scrollView.maximumZoomScale = 1;
+    
+    // Assignment
+    CGRect shareButtonFrame = CGRectMake((self.view.frame.size.width-125), 10, 100, 100);
+    self.shareButton.frame = shareButtonFrame;
+    
+    
+    
 }
 
 - (void)centerScrollView
@@ -181,7 +204,48 @@
 }
 
 
-
+// **** Assignment ****
+- (void)sharePressed:(UIButton *)sender
+{
+    NSMutableArray *itemsToShare = [NSMutableArray array];
+    
+    if (self.media.image) {
+        [itemsToShare addObject:self.media.image];
+    }
+    
+    
+    UIActivityViewController *activityVC = [[UIActivityViewController alloc]
+                                            initWithActivityItems:itemsToShare
+                                            applicationActivities: nil];
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
+    
+    /*
+     
+     NSMutableArray *itemsToShare = [NSMutableArray array];
+     
+     if (cell.mediaItem.caption.length > 0) {
+     [itemsToShare addObject:cell.mediaItem.caption];
+     }
+     
+     if (cell.mediaItem.image) {
+     [itemsToShare addObject:cell.mediaItem.image];
+     }
+     
+     if (itemsToShare.count > 0) {
+     UIActivityViewController *activityVC = [[UIActivityViewController alloc]
+     initWithActivityItems:itemsToShare
+     applicationActivities:nil];
+     [self presentViewController:activityVC animated:YES completion:nil];
+     
+     }
+     
+     
+     */
+    
+    
+    
+}
 
 
 /*
