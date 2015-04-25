@@ -63,7 +63,6 @@
         if (!self.accessToken) {
             [self registerForAccessTokenNotification];
         } else {
-            [self populateDataWithParameters:nil completionHandler:nil];
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
             ^{
                 //find the file at the path and convert to an array
@@ -86,6 +85,8 @@
                     }
                 }); // dispatch_get_main
             }); //DISPATCH_QUEUE
+        
+            [self requestNewItemsWithCompletionHandler:nil];
         }
     }
     
