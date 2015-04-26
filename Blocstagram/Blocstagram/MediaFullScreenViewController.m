@@ -129,7 +129,7 @@
     [self centerScrollView];
 }
 
-
+ 
 #pragma mark - UIScrollViewDelegate
 
 // tells the scroll view which view to zoom in and out on

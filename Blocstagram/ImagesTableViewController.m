@@ -200,6 +200,12 @@
     [self presentViewController:fullScreenVC animated:YES completion:nil];
 }
 
+// Assignment
+- (void)cell:(MediaTableViewCell *)cell didTwoFingerTouchImageView:(UIImageView *)imageView
+{
+    [[DataSource sharedInstance] downloadImageForMediaItem:cell.mediaItem redownload:YES];
+}
+
 - (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView
 {
     NSMutableArray *itemsToShare = [NSMutableArray array];

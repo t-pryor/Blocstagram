@@ -88,7 +88,7 @@
                         [self didChangeValueForKey:@"mediaItems"];
                         
                         for (Media* mediaItem in self.mediaItems) {
-                            [self downloadImageForMediaItem:mediaItem];
+                            [self downloadImageForMediaItem:mediaItem redownload:nil];
                         }
                     } else {
                         [self populateDataWithParameters:nil completionHandler:nil];
@@ -210,68 +210,7 @@
     if (self.accessToken) {
         // only try to get the data if there's an access token
         
-//        //this is all done in the background
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//            // do the network request in the background, so the UI doesn't lockup
-//            
-//            NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://api.instagram.com/v1/users/self/feed?access_token=%@", self.accessToken];
-//            
-//            for (NSString *parameterName in parameters) {
-//                
-//                //append min_id=   or max_id= per Instagram API
-//                [urlString appendFormat:@"&%@=%@", parameterName, parameters[parameterName]];
-//            }
-//            
-//            NSURL *url = [NSURL URLWithString:urlString];
-//            
-//            if (url) {
-//                NSURLRequest *request = [NSURLRequest requestWithURL:url];
-//                NSURLResponse *response;
-//                NSError *webError;
-//                
-//                //NSURLConnection returns an NSData object
-//                ///but it also wants to communicate other information about the response (NSURLResponse)
-//                // and possibly an error, if something went wrong (NSError)
-//                // Since ObjC can only return one method, we pass in addresses of other vars as args
-//                // and the method sets them. AKA "vending"
-//                // this method returns an NSData and vends an NSURLRequest and an NSError
-//                NSData *responseData = [NSURLConnection sendSynchronousRequest:request
-//                                                             returningResponse:&response
-//                                                                         error:&webError];
-//                 // NSURLConnection returned valid response
-//                if (responseData) {
-//                    NSError *jsonError;
-//                    NSDictionary *feedDictionary = [NSJSONSerialization
-//                                                    JSONObjectWithData:responseData
-//                                                    options:0
-//                                                    error:&jsonError];
-//                    if (feedDictionary) {
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            //done networking, go back to main thread
-//                            [self parseDataFromFeedDictionary:feedDictionary
-//                                    fromRequestWithParameters:parameters];
-//                            if (completionHandler) {
-//                                completionHandler(nil);
-//                            }
-//                        });
-//                    } else if (completionHandler) {
-//                        dispatch_async(dispatch_get_main_queue(), ^{
-//                            completionHandler(jsonError);
-//                        });
-//                    }
-//                    
-//                }
-//                // responseData is nil
-//                else if (completionHandler) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        completionHandler(webError);
-//                    });
-//                }
-//            }
-//            
-//        }); // end dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-        
+ 
         // create a parameters dictionary for the access token and
         // add in any other parameters that might be passed in (like min_id or max_id)
         // The request operation manager gets the resource and if it's successful
@@ -318,7 +257,7 @@
         
         if (mediaItem) {
             [tmpMediaItems addObject:mediaItem];
-            [self downloadImageForMediaItem:mediaItem]; // inefficient, downloads images simultaneously, will replace
+            [self downloadImageForMediaItem:mediaItem redownload:nil]; // inefficient, downloads images simultaneously, will replace
         }
     }
     
@@ -379,38 +318,10 @@
         });
     }
 }
-
-- (void)downloadImageForMediaItem:(Media *)mediaItem
+// Assignment
+- (void)downloadImageForMediaItem:(Media *)mediaItem redownload:(BOOL)rd
 {
-    if (mediaItem.mediaURL && !mediaItem.image) {
-//        //dispatch_asynch to a background queue
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//           //Make an NSURLRequest
-//            NSURLRequest *request = [NSURLRequest requestWithURL:mediaItem.mediaURL];
-//            NSURLResponse *response;
-//            NSError *error;
-//            // Use NSURLConnection to connect and get the NSData
-//            NSData *imageData = [NSURLConnection sendSynchronousRequest:request
-//                                 returningResponse:&response
-//                                             error:&error];
-//            // Attempt to convert the NSData into the expected object type
-//            if (imageData) {
-//                UIImage *image = [UIImage imageWithData:imageData];
-//                
-//                // if it works, dispatch_async back to the main queue and update the data model with the results
-//                if (image) {
-//                    mediaItem.image = image;
-//                    
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-//                        NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
-//                        [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];
-//                        
-//                        [self saveImages];
-//                    });
-//                }
-//            }
-//        });
+    if ((mediaItem.mediaURL && !mediaItem.image) || rd) {
         
         [self.instagramOperationManager
                     GET: mediaItem.mediaURL.absoluteString
