@@ -23,10 +23,9 @@ typedef void (^NewItemCompletionBlock)(NSError *error);
 
 
 + (NSString *) instagramClientID;
-- (void) deleteMediaItem:(Media *)item;
-- (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
-//- (void)requestNewItemsWithCompletionHandler:(void (^)(NSError *error))NewItemCompletionBlock;
--(void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
-//- (void) requestOldItemsWithCompletionHandler:(void (^)(NSError *error))NewItemCompletionBlock;
+- (void)deleteMediaItem:(Media *)item;
+- (void)requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
+- (void)requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
+- (void)downloadImageForMediaItem:(Media *)mediaItem;
 
 @end

@@ -124,6 +124,20 @@
     return cell;
 }
 
+// Instead of downloading all the images as we get the media items, we'll check whether
+// we need the images right before a cell displays.
+// a table view sends this message to its delegate just before it uses cell to draw a row
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+    if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+        [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+    }
+}
+
+
+
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // (widthOfTheScreen / widthOfThePicture) x heightOfThePicture = heightOfTheCell
