@@ -148,6 +148,8 @@
     //return 300 + (image.size.height / image.size.width * CGRectGetWidth(self.view.frame));
     return [MediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
 
+    
+    
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -196,15 +198,46 @@
     }
 }
 
+
+// Assignment
+- (void)displayImagesForVisibleRows
+{
+    NSArray *indexPathsForVisibleRowsArray = [self.tableView indexPathsForVisibleRows];
+    
+    for (NSIndexPath *indexPath in indexPathsForVisibleRowsArray) {
+        Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+        if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+            [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+        }
+    }
+}
+
+
 #pragma mark - UIScrollViewDelegate
 // This delegate method is invoked when the scroll view is scrolled in any direction
 // As the user scrolls the table view, this method is called repeatedly
 // good place to check whether the last image in our array has made it onto the screen
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self infiniteScrollIfNecessary];
 }
 
+// Assignment
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    [self displayImagesForVisibleRows];
+}
+
+// Assignment
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    decelerate = YES;
+    [self displayImagesForVisibleRows];
+    
+}
+
+
+ 
 #pragma mark - MediaTableViewCellDelegate
 
 - (void)cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {

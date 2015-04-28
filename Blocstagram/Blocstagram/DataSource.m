@@ -84,18 +84,22 @@
                         NSMutableArray *mutableMediaItems = [storedMediaItems mutableCopy];
                         
                         [self willChangeValueForKey:@"mediaItems"];
-                        _mediaItems = mutableMediaItems;   //*ASK STEVE
+                        _mediaItems = mutableMediaItems;
                         [self didChangeValueForKey:@"mediaItems"];
                         
-//                        for (Media* mediaItem in self.mediaItems) {
-//                            [self downloadImageForMediaItem:mediaItem];
-//                        }
+
                     } else {
                         [self populateDataWithParameters:nil completionHandler:nil];
                     }
                 }); // dispatch_get_main
             }); //DISPATCH_QUEUE
         }
+    
+        NSMutableArray *emptyMutableArray = [[NSMutableArray alloc] init];
+        [self willChangeValueForKey:@"mediaItems"];
+        _mediaItems = emptyMutableArray;
+        [self didChangeValueForKey:@"mediaItems"];
+    
     }
     
     return self;
@@ -290,7 +294,7 @@
         [self didChangeValueForKey:@"mediaItems"];
     }
     
-    [self saveImages];
+   [self saveImages];
     
 }
 
@@ -326,7 +330,7 @@
     if (mediaItem.mediaURL && !mediaItem.image) {
         mediaItem.downloadState = MediaDownloadStateDownloadInProgress;
         
-        [self.instagramOperationManager
+        [self.instagramOperationManager 
                     GET: mediaItem.mediaURL.absoluteString
              parameters:nil
                 success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -336,7 +340,7 @@
                         NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
                         NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
                         [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];
-                        [self saveImages];
+                       [self saveImages];
                     } else {
                         mediaItem.downloadState = MediaDownloadStateNonRecoverableError;
                     }
