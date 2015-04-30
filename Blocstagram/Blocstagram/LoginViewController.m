@@ -29,7 +29,7 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification =
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self clearInstagramCookies];
+   // [self clearInstagramCookies];
     UIWebView *webView = [[UIWebView alloc] init];
     webView.delegate = self;
     
@@ -38,9 +38,7 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification =
     
     self.title = NSLocalizedString(@"Login", @"Login");
     
-    NSString *urlString = [NSString
-                           stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token",
-                           [DataSource instagramClientID], [self redirectURI]];
+    NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&scope=likes+comments+relationships&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
     
     NSURL *url = [NSURL URLWithString:urlString];
     

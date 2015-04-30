@@ -237,6 +237,22 @@
     
 }
 
+- (void)cellDidPressLikeButton:(MediaTableViewCell *)cell
+{
+    Media *item = cell.mediaItem;
+    
+    [[DataSource sharedInstance] toggleLikeOnMediaItem:item withCompletionHandler:^{
+        // table views reload cells
+        // if the user scrolls and the cell is reused to display a different media item, we no
+        // longer want to update the button
+        if (cell.mediaItem == item) {
+            cell.mediaItem = item;
+        }
+    }];
+    
+    cell.mediaItem = item;
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
