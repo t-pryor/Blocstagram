@@ -32,6 +32,7 @@
 		22AEC3291AD31F6900E08389 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC31F1AD31F6900E08389 /* 9.jpg */; };
 		22AEC32A1AD31F6900E08389 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22AEC3201AD31F6900E08389 /* 10.jpg */; };
 		22AEC3301AD320C000E08389 /* ImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AEC32F1AD320C000E08389 /* ImagesTableViewController.m */; };
+		22B559511AF3B57E00B153DF /* ComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B559501AF3B57E00B153DF /* ComposeCommentView.m */; };
 		22BDB2E91AD6CD1800A39EB9 /* X_MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB2E81AD6CD1800A39EB9 /* X_MediaTableViewCell.m */; };
 		22E079871AF05D1200CC279B /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E079861AF05D1200CC279B /* CircleSpinnerView.m */; };
 		22E0798A1AF069B900CC279B /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E079891AF069B900CC279B /* LikeButton.m */; };
@@ -88,6 +89,8 @@
 		22AEC3201AD31F6900E08389 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
 		22AEC32E1AD320C000E08389 /* ImagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagesTableViewController.h; path = ../ImagesTableViewController.h; sourceTree = "<group>"; };
 		22AEC32F1AD320C000E08389 /* ImagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImagesTableViewController.m; path = ../ImagesTableViewController.m; sourceTree = "<group>"; };
+		22B5594F1AF3B57E00B153DF /* ComposeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeCommentView.h; path = ../ComposeCommentView.h; sourceTree = "<group>"; };
+		22B559501AF3B57E00B153DF /* ComposeCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeCommentView.m; path = ../ComposeCommentView.m; sourceTree = "<group>"; };
 		22BDB2E71AD6CD1800A39EB9 /* X_MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = X_MediaTableViewCell.h; sourceTree = "<group>"; };
 		22BDB2E81AD6CD1800A39EB9 /* X_MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = X_MediaTableViewCell.m; sourceTree = "<group>"; };
 		22E079851AF05D1200CC279B /* CircleSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSpinnerView.h; sourceTree = "<group>"; };
@@ -156,6 +159,8 @@
 				22567A881ADD5E6B006DD82E /* LoginViewController.m */,
 				2250AE3B1AE81DFC00E2D058 /* MediaFullScreenViewController.h */,
 				2250AE3C1AE81DFC00E2D058 /* MediaFullScreenViewController.m */,
+				22B5594F1AF3B57E00B153DF /* ComposeCommentView.h */,
+				22B559501AF3B57E00B153DF /* ComposeCommentView.m */,
 				22E079851AF05D1200CC279B /* CircleSpinnerView.h */,
 				22E079861AF05D1200CC279B /* CircleSpinnerView.m */,
 				22E079881AF069B900CC279B /* LikeButton.h */,
@@ -391,6 +396,7 @@
 				2254374E1AD44FFC00C73EE3 /* DataSource.m in Sources */,
 				22AEC2F31AD3144000E08389 /* main.m in Sources */,
 				22E0798A1AF069B900CC279B /* LikeButton.m in Sources */,
+				22B559511AF3B57E00B153DF /* ComposeCommentView.m in Sources */,
 				22E079871AF05D1200CC279B /* CircleSpinnerView.m in Sources */,
 				22AEC3301AD320C000E08389 /* ImagesTableViewController.m in Sources */,
 			);

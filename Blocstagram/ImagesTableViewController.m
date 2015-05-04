@@ -15,7 +15,11 @@
 #import "MediaFullScreenViewController.h"
 
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate>
+
+@property (nonatomic, weak) UIImageView *lastTappedImageView;
+@property (nonatomic, weak) UIView *lastSelectedCommentView;
+@property (nonatomic, assign) CGFloat lastKeyboardAdjustment;
 
 
 @end
@@ -42,6 +46,17 @@
     
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
     
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
 }
 
@@ -53,6 +68,18 @@
 - (void) dealloc
 {
     [[DataSource sharedInstance] removeObserver:self forKeyPath:@"mediaItems"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    NSIndexPath *indexPath = self.tableView.indexPathForSelectedRow;
+    if (indexPath) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:animated];
+    }
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    
 }
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -124,6 +151,15 @@
     return cell;
 }
 
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MediaTableViewCell *cell = (MediaTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [cell stopComposingComment];
+}
+
+
+
 // Instead of downloading all the images as we get the media items, we'll check whether
 // we need the images right before a cell displays.
 // a table view sends this message to its delegate just before it uses cell to draw a row
@@ -164,11 +200,13 @@
 {
     Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
     if (item.image) {
-        return 350;
+        return 450;
     } else {
-        return 150;
+        return 250;
     }
 }
+
+
 
 
 - (NSArray *) items {
@@ -251,6 +289,95 @@
     }];
     
     cell.mediaItem = item;
+}
+
+- (void)cellWillStartComposingComment:(MediaTableViewCell *)cell
+{
+    self.lastSelectedCommentView = (UIView *)cell.commentView;
+}
+
+- (void)cell:(MediaTableViewCell *)cell didComposeComment:(NSString *)comment
+{
+    [[DataSource sharedInstance] commentOnMediaItem:cell.mediaItem withCommentText:comment];
+}
+
+#pragma mark - Keyboard Handling
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    // Get the frame of the keyboard within self.view's coordinate system
+    NSValue *frameValue = notification.userInfo[UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardFrameInScreenCoordinates = frameValue.CGRectValue;
+    CGRect keyboardFrameInViewCoordinates = [self.navigationController.view
+                                             convertRect:keyboardFrameInScreenCoordinates
+                                             fromView:nil];
+    
+    // Get the frame of the comment view in the same coordinate system
+    CGRect commentViewFrameInViewCoordinates = [self.navigationController.view
+                                                convertRect:self.lastSelectedCommentView.bounds
+                                                fromView:self.lastSelectedCommentView];
+    
+    CGPoint contentOffset = self.tableView.contentOffset;
+    UIEdgeInsets contentInsets = self.tableView.contentInset;
+    UIEdgeInsets scrollIndicatorInsets = self.tableView.scrollIndicatorInsets;
+    CGFloat heightToScroll = 0;
+    
+    CGFloat keyboardY = CGRectGetMinY(keyboardFrameInViewCoordinates);
+    CGFloat commentViewY = CGRectGetMinY(commentViewFrameInViewCoordinates);
+    CGFloat difference = commentViewY - keyboardY;
+    
+    if (difference > 0) {
+        heightToScroll += difference;
+    }
+    
+    if (CGRectIntersectsRect(keyboardFrameInViewCoordinates, commentViewFrameInViewCoordinates)) {
+        // The two frames intersect (the keyboard would block the view)
+        CGRect intersectionRect = CGRectIntersection(keyboardFrameInViewCoordinates, commentViewFrameInViewCoordinates);
+        heightToScroll += CGRectGetHeight(intersectionRect);
+    }
+    
+    if (heightToScroll > 0) {
+        contentInsets.bottom += heightToScroll;
+        scrollIndicatorInsets.bottom += heightToScroll;
+        contentOffset.y += heightToScroll;
+        
+        NSNumber *durationNumber = notification.userInfo[UIKeyboardAnimationDurationUserInfoKey];
+        NSNumber *curveNumber = notification.userInfo[UIKeyboardAnimationCurveUserInfoKey];
+        
+        NSTimeInterval duration = durationNumber.doubleValue;
+        UIViewAnimationCurve curve = curveNumber.unsignedIntegerValue;
+        UIViewAnimationOptions options = curve << 16;
+        
+        [UIView animateWithDuration:duration delay:0 options:options animations:^{
+            self.tableView.contentInset = contentInsets;
+            self.tableView.scrollIndicatorInsets = scrollIndicatorInsets;
+            self.tableView.contentOffset = contentOffset;
+        } completion:nil];
+    
+    }
+    
+    self.lastKeyboardAdjustment = heightToScroll;
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    UIEdgeInsets contentInsets = self.tableView.contentInset;
+    contentInsets.bottom -= self.lastKeyboardAdjustment;
+    
+    UIEdgeInsets scrollIndicatorInsets = self.tableView.scrollIndicatorInsets;
+    scrollIndicatorInsets.bottom -= self.lastKeyboardAdjustment;
+    
+    NSNumber *durationNumber = notification.userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    NSNumber *curveNumber = notification.userInfo[UIKeyboardAnimationCurveUserInfoKey];
+    
+    NSTimeInterval duration = durationNumber.doubleValue;
+    UIViewAnimationCurve curve = curveNumber.unsignedIntegerValue;
+    UIViewAnimationOptions options = curve << 16;
+    
+    [UIView animateWithDuration:duration delay:0 options:options animations:^{
+        self.tableView.contentInset = contentInsets;
+        self.tableView.scrollIndicatorInsets = scrollIndicatorInsets;
+    } completion:nil];
 }
 
 /*
