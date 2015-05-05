@@ -17,7 +17,16 @@
 
 @end
 
+
+
+
 @implementation ComposeCommentView
+
+//+ (void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^)(BOOL))completion
+//{
+//
+//
+//}
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -28,7 +37,7 @@
         self.textView.delegate = self;
         
         self.button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self.button setAttributedTitle:[self commentAttributedString] forState:UIControlStateNormal];
+        [self.button setAttributedTitle:[self commentAttributedString:@"Comment"] forState:UIControlStateNormal];
         [self.button addTarget:self action:@selector(commentButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:self.textView];
@@ -37,9 +46,9 @@
     return self;
 }
 
-- (NSAttributedString *)commentAttributedString
+- (NSAttributedString *)commentAttributedString:(NSString *)text
 {
-    NSString *baseString = NSLocalizedString(@"Comment", @"comment button text");
+    NSString *baseString = NSLocalizedString(text, @"comment button text");
     NSRange range = [baseString rangeOfString:baseString];
     
     NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] initWithString:baseString];
@@ -90,21 +99,38 @@
 
 - (void)setIsWritingComment:(BOOL)isWritingComment
 {
-    [self setIsWritingComment:isWritingComment animated:NO];
+    [self setIsWritingComment:isWritingComment animated:YES];
 }
 
 - (void)setIsWritingComment:(BOOL)isWritingComment animated:(BOOL)animated
 {
     _isWritingComment = isWritingComment;
-    
+
+    // Assignment
     if (animated) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self layoutSubviews];
-        }];
+        [UIView animateWithDuration:2.0 delay:0.2 usingSpringWithDamping:0.5 initialSpringVelocity:0.3 options:UIViewAnimationOptionCurveLinear                         animations:^{
+                                        [self layoutSubviews];
+                        }
+                         completion:^void(BOOL bl){
+                             [self.button setAttributedTitle:[self commentAttributedString:@"FooBar"] forState:UIControlStateNormal];
+                         }];
     } else {
         [self layoutSubviews];
     }
+    
+    
+    //    if (animated) {
+    //        [UIView animateWithDuration:0.2 animations:^{
+    //            [self layoutSubviews];
+    //        }];
+    //    } else {
+    //        [self layoutSubviews];
+    //    }
 }
+
+
+
+
 
 /*
  // In the most general sense, animations in iOS look like this:
@@ -165,6 +191,9 @@
     
     return YES;
 }
+
+
+
 
 
 @end
