@@ -111,40 +111,13 @@
         [UIView animateWithDuration:2.0 delay:0.2 usingSpringWithDamping:0.5 initialSpringVelocity:0.3 options:UIViewAnimationOptionCurveLinear                         animations:^{
                                         [self layoutSubviews];
                         }
-                         completion:^void(BOOL bl){
-                             [self.button setAttributedTitle:[self commentAttributedString:@"FooBar"] forState:UIControlStateNormal];
-                         }];
+            completion:nil];
+    
     } else {
         [self layoutSubviews];
     }
-    
-    
-    //    if (animated) {
-    //        [UIView animateWithDuration:0.2 animations:^{
-    //            [self layoutSubviews];
-    //        }];
-    //    } else {
-    //        [self layoutSubviews];
-    //    }
 }
 
-
-
-
-
-/*
- // In the most general sense, animations in iOS look like this:
- 
- // Configure view appearance when the animation starts
-[UIView animateWithDuration:// How long the animation takes
-                 animations:^{
-                     // Configure view appearance when the animation ends
-                 }
-                 completion:^(BOOL finished) {
-                     // Perform any cleanup after the animation has completed
-                 }];
-
-*/
 
 - (void)setText:(NSString *)text {
     _text = text;
