@@ -6,10 +6,16 @@
 //
 //
 
+
+
+
+
 #import <UIKit/UIKit.h>
 
 @class CameraViewController;
 
+// A delegate property and accompanying protocol will inform the present view controller when the view controller is done
+// ImagesTableViewController is the presenting view controller
 @protocol CameraViewControllerDelegate <NSObject>
 
 - (void)cameraViewController:(CameraViewController *)cameraViewController didCompleteWithImage:(UIImage *) image;

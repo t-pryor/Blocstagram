@@ -13,14 +13,17 @@
 
 @interface CameraViewController () <CameraToolbarDelegate>
 
+// shows the user the image from the camera
 @property (nonatomic, strong) UIView *imagePreview;
-
+// session coordinates data from inputs (cameras and microphones) to the outputs (movie files and still images)
 @property (nonatomic, strong) AVCaptureSession *session;
+// special type of CALayer that displays video from a camera
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillImageOutput;
-
+// horizontalLines and verticalLines will contain thin, white UIViews that will compose a 3x3 photo grid over the photo capture area
 @property (nonatomic, strong) NSArray *horizontalLines;
 @property (nonatomic, strong) NSArray *verticalLines;
+// topView and bottomView are UIToolbars
 @property (nonatomic, strong) UIToolbar *topView;
 @property (nonatomic, strong) UIToolbar *bottomView;
 
@@ -80,6 +83,7 @@
     
     
     // request permission from th user to access the camera
+    // Because user may not respond immediately, response is handled asynchronously in a completion block
     [AVCaptureDevice
      requestAccessForMediaType:AVMediaTypeVideo
      completionHandler:^(BOOL granted)
@@ -101,15 +105,17 @@
                             [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OKButton")
                                                                         style:UIAlertActionStyleCancel
                                                                       handler:^(UIAlertAction *action)
-                                                {
-                                                [self.delegate cameraViewController:self didCompleteWithImage:nil];
-                                                }
+                                                                      {
+                                                                          [self.delegate cameraViewController:self didCompleteWithImage:nil];
+                                                                      }
                                                 ]
-                             ];
-                        } else { //#7
+                            ];
+                        
+                        } else { //#7  add the input to our capture session
                             
                             [self.session addInput:input];
                             
+                            // create a still image output that saves JPEG files
                             self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
                             
                             self.stillImageOutput.outputSettings = @{AVVideoCodecKey: AVVideoCodecJPEG};
@@ -180,13 +186,17 @@
 
 - (void)setUpImageCapture
 {
+    // create a capture session, which mediates between the camera and output layer
     self.session = [[AVCaptureSession alloc] init];
     self.session.sessionPreset = AVCaptureSessionPresetHigh;
     
+    // create captureVideoPreviewLayer to display the camera content
     self.captureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
+    // Specifies that the player should preserve the video’s aspect ratio and fill the layer’s bounds
     self.captureVideoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
     self.captureVideoPreviewLayer.masksToBounds = YES;
+    // addSublayer: analogous to calling addSubview: on a UIView
     [self.imagePreview.layer addSublayer:self.captureVideoPreviewLayer];
     
     [AVCaptureDevice
@@ -209,8 +219,8 @@
                                                 style:UIAlertActionStyleCancel
                                                 handler:^(UIAlertAction *action)
                                                 {
-                                                [self.delegate cameraViewController:self
-                                                               didCompleteWithImage:nil];
+                                                    [self.delegate cameraViewController:self
+                                                                   didCompleteWithImage:nil];
                                                 }
                                                 ]
                              ];
@@ -295,6 +305,7 @@
 
 - (void)leftButtonPressedOnToolbar:(CameraToolbar *)toolbar
 {
+    // get the current input and an array of all possible video devices
     AVCaptureDeviceInput *currentCameraInput = self.session.inputs.firstObject;
     
     NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
@@ -325,13 +336,13 @@
                                   delay:0
                                 options:UIViewAnimationOptionCurveEaseInOut
                              animations:^
-             {
-             fakeView.alpha = 0;
-             }
-                             completion:^(BOOL finished)
-             {
-             [fakeView removeFromSuperview];
-             }
+                                         {
+                                            fakeView.alpha = 0;
+                                         }
+                                                         completion:^(BOOL finished)
+                                         {
+                                            [fakeView removeFromSuperview];
+                                         }
              ];
         }
     }
