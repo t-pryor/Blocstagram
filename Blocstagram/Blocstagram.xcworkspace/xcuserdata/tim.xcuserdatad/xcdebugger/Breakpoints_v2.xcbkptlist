@@ -6,9 +6,10 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "ImagesTableViewController.m"
             timestampString = "452204389.650651"
             startingColumnNumber = "9223372036854775807"
@@ -16,22 +17,15 @@
             startingLineNumber = "185"
             endingLineNumber = "185"
             landmarkName = "-tableView:heightForRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blocstagram/CircleSpinnerView.m"
-            timestampString = "452028984.001586"
+=======
+            filePath = "ComposeCommentView.m"
+            timestampString = "453047837.623752"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "-initWithFrame:"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "-textViewShouldEndEditing:"
+>>>>>>> checkpoint-40-taking-pictures
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,6 +35,23 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+            filePath = "Blocstagram/CameraToolbar.m"
+            timestampString = "453300540.749951"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "-leftButtonPressed:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "Blocstagram/DataSource.m"
             timestampString = "452113155.757586"
             startingColumnNumber = "9223372036854775807"
@@ -48,6 +59,15 @@
             startingLineNumber = "134"
             endingLineNumber = "134"
             landmarkName = "-toggleLikeOnMediaItem:withCompletionHandler:"
+=======
+            filePath = "Blocstagram/CameraViewController.m"
+            timestampString = "453305150.868367"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "-viewDidLoad"
+>>>>>>> checkpoint-40-taking-pictures
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,6 +77,7 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "Blocstagram/DataSource.m"
             timestampString = "452113162.366034"
             startingColumnNumber = "9223372036854775807"
@@ -64,6 +85,15 @@
             startingLineNumber = "141"
             endingLineNumber = "141"
             landmarkName = "-toggleLikeOnMediaItem:withCompletionHandler:"
+=======
+            filePath = "Blocstagram/CameraViewController.m"
+            timestampString = "453305150.868367"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-addViewsToViewHierarchy"
+>>>>>>> checkpoint-40-taking-pictures
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,6 +103,7 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
+<<<<<<< HEAD
             filePath = "Blocstagram/LoginViewController.m"
             timestampString = "452206037.482088"
             startingColumnNumber = "9223372036854775807"
@@ -80,6 +111,15 @@
             startingLineNumber = "48"
             endingLineNumber = "48"
             landmarkName = "-viewDidLoad"
+=======
+            filePath = "Blocstagram/CameraViewController.m"
+            timestampString = "453308905.108174"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "-setupImageCapture"
+>>>>>>> checkpoint-40-taking-pictures
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
