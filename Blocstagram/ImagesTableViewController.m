@@ -16,11 +16,9 @@
 #import "CameraViewController.h"
 
 
-<<<<<<< HEAD
-@interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate>
-=======
+
 @interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate, CameraViewControllerDelegate>
->>>>>>> checkpoint-40-taking-pictures
+
 
 @property (nonatomic, weak) UIImageView *lastTappedImageView;
 @property (nonatomic, weak) UIView *lastSelectedCommentView;
