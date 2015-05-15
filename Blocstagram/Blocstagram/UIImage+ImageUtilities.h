@@ -14,4 +14,8 @@
 - (UIImage *)imageResizedToMatchAspectRatioOfSize:(CGSize)size;
 - (UIImage *)imageCroppedToRect:(CGRect)cropRect;
 
+// assignment
+- (UIImage *)imageByScalingToSize:(CGSize)size andCroppingWithRect:(CGRect)cropRect;
+
+
 @end

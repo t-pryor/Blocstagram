@@ -151,7 +151,7 @@
 
 - (void) cameraViewController:(CameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image
 {
-    [cameraViewController dismissViewControllerAnimated:YES
+    [self dismissViewControllerAnimated:YES
                                     completion:^
                                     {
                                         if (image) {
