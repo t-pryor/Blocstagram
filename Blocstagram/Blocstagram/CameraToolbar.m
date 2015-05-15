@@ -104,7 +104,7 @@
     // The three buttons have equal widths and are distributed across the whole view
     NSArray *allButtonsHorizontalConstraints =
         [NSLayoutConstraint
-        constraintsWithVisualFormat:@"H:|[_leftButton][_cameraButton(==_leftButton)][_rightButton(==_leftButton)]"
+        constraintsWithVisualFormat:@"H:|[_leftButton][_cameraButton(==_leftButton)][_rightButton(==_leftButton)]|"
                             options:kNilOptions
                             metrics:nil
                               views:viewDictionary];
@@ -117,7 +117,7 @@
                                             metrics:nil
                                               views:viewDictionary];
     NSArray *cameraButtonVerticalContraints =
-    [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cameraButton]|"
+    [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_cameraButton]|"
                                            options:kNilOptions
                                            metrics:nil
                                              views:viewDictionary];
