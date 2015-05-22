@@ -11,7 +11,7 @@
 
 @interface MediaFullScreenViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) Media *media;
+
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 
@@ -78,14 +78,18 @@
     [super viewWillLayoutSubviews];
     // scroll view's frame is set to the view's bounds
     self.scrollView.frame = self.view.bounds;
+    [self recalculateZoomScale];
     
-    // Examine two ratios:
-    // 1. ratio of the scroll view's width to the image's width
-    // 2. ratio of the scroll view's height to the image's height
-    // Whichever is smaller will become our minimumZoomScale.
-    // This prevents the user from pinching the image so small that there's wasted screen space
+}
+
+- (void)recalculateZoomScale
+{
     CGSize scrollViewFrameSize = self.scrollView.frame.size;
     CGSize scrollViewContentSize = self.scrollView.contentSize;
+ 
+    scrollViewContentSize.height /= self.scrollView.zoomScale;
+    scrollViewContentSize.width /= self.scrollView.zoomScale;
+    
     
     CGFloat scaleWidth = scrollViewFrameSize.width / scrollViewContentSize.width;
     CGFloat scaleHeight = scrollViewFrameSize.height / scrollViewContentSize.height;
@@ -133,6 +137,7 @@
 #pragma mark - UIScrollViewDelegate
 
 // tells the scroll view which view to zoom in and out on
+// this is necessary for scrolling
 - (UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
     return self.imageView;
