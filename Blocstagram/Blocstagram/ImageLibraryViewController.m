@@ -48,6 +48,7 @@
 {
     [super viewWillLayoutSubviews];
     
+    
     CGFloat width = CGRectGetWidth(self.view.frame);
     CGFloat minWidth = 100;
     NSInteger divisor = width / minWidth;
@@ -55,17 +56,37 @@
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
     flowLayout.itemSize = CGSizeMake(cellSize, cellSize);
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.minimumLineSpacing = 0;
+    
+    if (UIDeviceOrientationIsLandscape(self.interfaceOrientation)) {
+        flowLayout.minimumInteritemSpacing = 1;
+        flowLayout.minimumLineSpacing = 30;
+    }
+    
+    if (UIDeviceOrientationIsPortrait(self.interfaceOrientation)) {
+        flowLayout.minimumInteritemSpacing = 30;
+        flowLayout.minimumLineSpacing = 1;
+    
+    }
+    
+    
+    
 }
+
 
 
 - (void)loadAssets
 {
-    PHFetchOptions *options = [[PHFetchOptions alloc] init];
-    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-    self.result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
-                    
+    //PHFetchOptions *options = [[PHFetchOptions alloc] init];
+   // options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    
+    
+    PHFetchOptions *userAlbumsOptions = [PHFetchOptions new];
+    userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
+   // self.result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    
+    
+    self.result = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:userAlbumsOptions];
+                   
 }
 
 - (void)viewWillAppear:(BOOL)animated
