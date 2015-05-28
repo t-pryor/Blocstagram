@@ -76,16 +76,16 @@
 
 - (void)loadAssets
 {
-    //PHFetchOptions *options = [[PHFetchOptions alloc] init];
-   // options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+    PHFetchOptions *options = [[PHFetchOptions alloc] init];
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     
-    PHFetchOptions *userAlbumsOptions = [PHFetchOptions new];
-    userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
-   // self.result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+   // PHFetchOptions *userAlbumsOptions = [PHFetchOptions new];
+    //userAlbumsOptions.predicate = [NSPredicate predicateWithFormat:@"estimatedAssetCount > 0"];
+    self.result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
     
     
-    self.result = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:userAlbumsOptions];
+    //self.result = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum subtype:PHAssetCollectionSubtypeAny options:userAlbumsOptions];
                    
 }
 
