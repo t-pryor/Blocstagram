@@ -10,18 +10,22 @@
 
 @interface PostToInstagramViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate>
 
+// stores the image passed with initWithImage
 @property (nonatomic, strong) UIImage *sourceImage;
+// displays the image with its current filter
 @property (nonatomic, strong) UIImageView *previewImageView;
-
+// stores the photo filter operatons
 @property (nonatomic, strong) NSOperationQueue *photoFilterOperationQueue;
+// shows all the filters available
 @property (nonatomic, strong) UICollectionView *filterCollectionView;
-
+// these arrays hold filtered images and their titles
 @property (nonatomic, strong) NSMutableArray *filterImages;
 @property (nonatomic, strong) NSMutableArray *filterTitles;
-
+// send to Instagram button
 @property (nonatomic, strong) UIButton *sendButton;
+// shows on short iPhones in the navigation bar where there's no room for send button
 @property (nonatomic, strong) UIBarButtonItem *sendBarButton;
-
+// shares the image with Instagram
 @property (nonatomic, strong) UIDocumentInteractionController *documentController;
 
 @end
@@ -33,11 +37,15 @@
     self = [super init];
     
     if (self) {
+        // store the source image passed in and initialize the preview image with that image
         self.sourceImage = sourceImage;
         self.previewImageView = [[UIImageView alloc] initWithImage:self.sourceImage];
         
+        // create the operation queue
         self.photoFilterOperationQueue = [[NSOperationQueue alloc] init];
         
+        // Create and configure a UICollectionFlowLayout instance to define the layout of our filter
+        // collection view, and then use it to initialize a UICollectionView
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
         flowLayout.itemSize = CGSizeMake(44, 64);
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -49,9 +57,11 @@
         self.filterCollectionView.delegate = self;
         self.filterCollectionView.showsHorizontalScrollIndicator = NO;
         
+        // The first object in each array represents the unfiltered image
         self.filterImages = [NSMutableArray arrayWithObject:sourceImage];
         self.filterTitles = [NSMutableArray arrayWithObject:NSLocalizedString(@"None", @"Label for when no filter is applied to a photo")];
         
+        // create both sendButton and sendBarButton->they both have the same target-action method
         self.sendButton = [UIButton buttonWithType:UIButtonTypeSystem];
         self.sendButton.backgroundColor = [UIColor colorWithRed:0.345 green:0.318 blue:0.424 alpha:1]; /*#58516c*/
         self.sendButton.layer.cornerRadius = 5;
@@ -73,14 +83,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    
     [self.view addSubview:self.previewImageView];
     [self.view addSubview:self.filterCollectionView];
     
+    // less than 500 = 3.5inch iphone
     if (CGRectGetHeight(self.view.frame) > 500) {
         [self.view addSubview:self.sendButton];
     } else {
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
+    
     
     [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
@@ -130,6 +143,8 @@
 {
     NSString *baseString = NSLocalizedString(@"SEND TO INSTAGRAM", @"send to Instagram button text");
     NSRange range = [baseString rangeOfString:baseString];
+    
+    
     
     NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] initWithString:baseString];
     
@@ -195,14 +210,17 @@
 
 - (void)addCIImageToCollectionView:(CIImage *)CIImage withFilterTitle:(NSString *)filterTitle
 {
+    // convert the CIImage to a UIImage. Because CIImage isn't fully rendered, the output UIImage is slow to draw
     UIImage *image = [UIImage imageWithCIImage:CIImage scale:self.sourceImage.scale orientation:self.sourceImage.imageOrientation];
     if (image) {
         // Decompress image
+        // force the UIImage to draw then saves the drawn UIImage
         UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
         [image drawAtPoint:CGPointZero];
         image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
+        // on the main thread, add the completed UIImage and filter title to the arrays and tells the collection view that a new item is available
         dispatch_async(dispatch_get_main_queue(), ^{
             NSUInteger newIndex = self.filterImages.count;
             [self.filterImages addObject:image];
@@ -216,6 +234,10 @@
 - (void) addFiltersToQueue
 {
     CIImage *sourceCIImage = [CIImage imageWithCGImage:self.sourceImage.CGImage];
+    
+    // addOperationWithBlock: takes a block of code and adds it to the operation queue, which means it will run eventually
+    // The operation queue executes as many blocks as it can, up to its maxConcurrentOperationCount
+    // Because more than one operation can run at a time, the operations won't necessarily finish in the same order they're started
     
     // Noir filter
     
@@ -235,7 +257,7 @@
         
         if (boomFilter) {
             [boomFilter setValue:sourceCIImage forKey:kCIInputImageKey];
-            [self addCIImageToCollectionView:boomFilter withFilterTitle:NSLocalizedString(@"Boom", @"Boom Filter")];
+            [self addCIImageToCollectionView:boomFilter.outputImage withFilterTitle:NSLocalizedString(@"Boom", @"Boom Filter")];
         }
     }];
     
@@ -375,6 +397,10 @@
 
 - (void)sendButtonPressed:(id)sender
 {
+    
+    
+    // On iOS apps can define their own URL schemes so other apps can open them
+    // Instagram defines their own, so checking to see if the instagram:// URL scheme can be handled is a way to tell if app installed
     NSURL *instagramURL = [NSURL URLWithString:@"instagram://location?id=1"];
     
     UIAlertController *alertVC;
@@ -406,8 +432,11 @@
 
 - (void)sendImageToInstagramWithCaption:(NSString *)caption
 {
+    // convert the image to NSData
     NSData *imagedata = UIImageJPEGRepresentation(self.previewImageView.image, 0.9f);
+    //
     NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
+    // create a fle in the temp directory with the igo extension
     NSURL *fileURL = [[tmpDirURL URLByAppendingPathComponent:@"blocstagram"] URLByAppendingPathExtension:@"igo"];
     
     BOOL success = [imagedata writeToURL:fileURL atomically:YES];

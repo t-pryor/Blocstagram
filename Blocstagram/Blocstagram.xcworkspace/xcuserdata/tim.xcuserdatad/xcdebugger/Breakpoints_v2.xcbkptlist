@@ -41,13 +41,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blocstagram/PostToInstagramViewController.m"
-            timestampString = "454513503.819344"
+            filePath = "ImagesTableViewController.m"
+            timestampString = "454536435.687575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
-            landmarkName = "-addFiltersToQueue"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
+            landmarkName = "-imageLibraryViewController:didCompleteWithImage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

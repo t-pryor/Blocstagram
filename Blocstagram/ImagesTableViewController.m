@@ -18,7 +18,7 @@
 #import "PostToInstagramViewController.h"
 
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate, CameraViewControllerDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, UIViewControllerTransitioningDelegate, CameraViewControllerDelegate, ImageLibraryViewControllerDelegate>
 
 @property (nonatomic, weak) UIImageView *lastTappedImageView;
 @property (nonatomic, weak) UIView *lastSelectedCommentView;
@@ -168,6 +168,11 @@
     [self handleImage:image withNavigationController:cameraViewController.navigationController];
 }
 
+
+- (void)imageLibraryViewController:(ImageLibraryViewController *)imageLibraryViewController didCompleteWithImage:(UIImage *)image
+{
+    [self handleImage:image withNavigationController:imageLibraryViewController.navigationController];
+}
 
 
 
