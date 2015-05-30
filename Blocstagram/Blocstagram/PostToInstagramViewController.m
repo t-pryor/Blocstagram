@@ -163,9 +163,19 @@
     return self.filterImages.count;
 }
 
+
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
+    
+    
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+   // FilterCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"filterCell" forIndexPath:indexPath];
+    
+    
     
     static NSInteger imageViewTag = 1000;
     static NSInteger labelTag = 1001;
@@ -296,6 +306,48 @@
         }
         
     }];
+    
+    // Assignment
+    // Monochrome Filter
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *monoFilter = [CIFilter filterWithName:@"CIColorMonochrome"];
+        
+        if (monoFilter) {
+            [monoFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:monoFilter.outputImage withFilterTitle:NSLocalizedString(@"Monochrome", @"Monochrome Filter")];
+        }
+    }];
+    
+    // Assignment
+    // Compound filter: Monochrome + Pixellate
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *pixelFilter = [CIFilter filterWithName:@"CIPixellate"];
+        CIFilter *monoFilter = [CIFilter filterWithName:@"CIColorMonochrome"];
+        
+        if (pixelFilter) {
+            [pixelFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+            
+            CIImage *result = pixelFilter.outputImage;
+            
+            if (monoFilter) {
+                [monoFilter setValue:result forKeyPath:kCIInputImageKey];
+                result = monoFilter.outputImage;
+                
+            }
+            
+            [self addCIImageToCollectionView:result withFilterTitle:NSLocalizedString(@"MonoPixel", @"MonoPixelFilter")];
+            
+            
+        }
+    }];
+    
+    
+    
+    
+    
+    
+    
+    
     
     // Drunk filter
     
