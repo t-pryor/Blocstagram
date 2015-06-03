@@ -28,9 +28,12 @@
 @property (nonatomic, strong) Media *mediaItem;
 @property (nonatomic, weak) id <MediaTableViewCellDelegate> delegate;
 @property (nonatomic, strong, readonly) ComposeCommentView *commentView;
+// two arrays of auto-layout constraints
+@property (nonatomic, strong) NSArray *horizontallyRegularConstraints;
+@property (nonatomic, strong) NSArray *horizontallyCompactConstraints;
 
 
-+ (CGFloat)heightForMediaItem:(Media *) mediaItem width:(CGFloat)width;
++ (CGFloat)heightForMediaItem:(Media *)mediaItem width:(CGFloat)width traitCollection:(UITraitCollection *)traitCollection;
 
 - (void)stopComposingComment;
 

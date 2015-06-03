@@ -144,10 +144,30 @@
 
 - (void)cameraPressed:(UIBarButtonItem *)sender
 {
-    CameraViewController *cameraVC = [[CameraViewController alloc] init];
-    cameraVC.delegate = self;
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cameraVC];
-    [self presentViewController:nav animated:YES completion:nil];
+    
+    UIViewController *imageVC;
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        CameraViewController *cameraVC = [[CameraViewController alloc] init];
+        cameraVC.delegate = self;
+        imageVC = cameraVC;
+    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        ImageLibraryViewController *imageLibraryVC = [[ImageLibraryViewController alloc] init];
+        imageLibraryVC.delegate = self;
+        imageVC = imageLibraryVC;
+    }
+    
+    if (imageVC) {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imageVC];
+        
+    
+        nav.modalPresentationStyle = UIModalPresentationPopover;
+        UIPopoverPresentationController *popoverController = nav.popoverPresentationController;
+        popoverController.barButtonItem = sender;
+        
+        [self presentViewController:nav animated:YES completion:nil];
+    }
+    
     return;
 }
 
@@ -217,18 +237,15 @@
 }
 
 
-
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // (widthOfTheScreen / widthOfThePicture) x heightOfThePicture = heightOfTheCell
-    // for best performance, resize the image objects themselves to the exact size in which
-    // they'll be displaed
-    Media *item = [self items][indexPath.row];
-    //UIImage *image = item.image;
-    //return 300 + (image.size.height / image.size.width * CGRectGetWidth(self.view.frame));
-    return [MediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)];
-
+    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
+    
+    return [MediaTableViewCell heightForMediaItem:item width:CGRectGetWidth(self.view.frame)
+                                  traitCollection:self.view.traitCollection];
+    
 }
+
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -289,12 +306,23 @@
 
 #pragma mark - MediaTableViewCellDelegate
 
-- (void)cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {
+- (void)cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView
+{
+
     MediaFullScreenViewController *fullScreenVC =
     [[MediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
     
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        fullScreenVC.modalPresentationStyle = UIModalPresentationFormSheet;
+    } else {
+        fullScreenVC.transitioningDelegate = self;
+        fullScreenVC.modalPresentationStyle = UIModalPresentationCustom;
+    }
+    
+    
     [self presentViewController:fullScreenVC animated:YES completion:nil];
 }
+
 
 - (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView
 {

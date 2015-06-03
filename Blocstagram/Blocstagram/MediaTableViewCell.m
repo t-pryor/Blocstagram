@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (nonatomic, strong) LikeButton *likeButton;
 @property (nonatomic, strong) ComposeCommentView *commentView;
+@property (nonatomic, strong) UITraitCollection *overrideTraitCollection;
 
 
 
@@ -65,21 +66,34 @@ static NSParagraphStyle *paragraphStyle;
     paragraphStyle = mutableParagraphStyle;
 }
 
-+(CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width {
-    
++ (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width traitCollection:(UITraitCollection *)traitCollection {
+
     MediaTableViewCell *layoutCell = [[MediaTableViewCell alloc]
                                       initWithStyle:UITableViewCellStyleDefault
                                     reuseIdentifier:@"layoutCell"];
     
-    layoutCell.frame = CGRectMake(0, 0, width, CGRectGetHeight(layoutCell.frame));
     layoutCell.mediaItem = mediaItem;
-   // [layoutCell setNeedsLayout];
+    layoutCell.frame = CGRectMake(0, 0, width, CGRectGetHeight(layoutCell.frame));
+    
+    layoutCell.overrideTraitCollection = traitCollection;
+    
+    [layoutCell setNeedsLayout];
     [layoutCell layoutIfNeeded];
     
     
     return CGRectGetMaxY(layoutCell.commentView.frame);
     
 }
+
+- (UITraitCollection *)traitCollection
+{
+    if (self.overrideTraitCollection) {
+        return self.overrideTraitCollection;
+    }
+    
+    return [super traitCollection];
+}
+
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -192,7 +206,38 @@ static NSParagraphStyle *paragraphStyle;
                                       constant:100];
         self.commentLabelHeightConstraint.identifier = @"Comment label height constraint";
         
-        [self.contentView addConstraints:@[self.imageHeightConstraint, self.usernameAndCaptionLabelHeightConstraint, self.commentLabelHeightConstraint]];
+        // returns an array of constraints-for iPhones in portrait and landscape
+        // left edge is 0 points on its left and right edges
+        self.horizontallyCompactConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary];
+        
+        
+        
+        
+        NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:_mediaImageView
+                                                                           attribute:NSLayoutAttributeWidth
+                                                                           relatedBy:NSLayoutRelationEqual
+                                                                              toItem:nil
+                                                                           attribute:NSLayoutAttributeNotAnAttribute
+                                                                          multiplier:1
+                                                                            constant:320];
+        
+        NSLayoutConstraint *centerConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                            relatedBy:0
+                                                                               toItem:_mediaImageView
+                                                                            attribute:NSLayoutAttributeCenterX
+                                                                           multiplier:1
+                                                                             constant:0];
+        
+        self.horizontallyRegularConstraints = @[widthConstraint, centerConstraint];
+        
+        if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
+            /* It's compact */
+            [self.contentView addConstraints:self.horizontallyCompactConstraints];
+        } else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+            /* It's regular */
+            [self.contentView addConstraints:self.horizontallyRegularConstraints];
+        }
         
     }
     return self;
@@ -215,19 +260,38 @@ static NSParagraphStyle *paragraphStyle;
         commentLabelSize.height == 0 ? 0 : commentLabelSize.height + 20;
     
     if (self.mediaItem.image.size.width > 0 && CGRectGetWidth(self.contentView.bounds) > 0) {
-        self.imageHeightConstraint.constant = self.mediaItem.image.size.height /
-        self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+        if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
+            /* It's compact! */
+            self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+        } else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+            /* It's regular */
+            self.imageHeightConstraint.constant = 320;
+        }
+    
     } else {
         self.imageHeightConstraint.constant = 0;
     }
     
     
-    
     // Hide the line between cells
     self.separatorInset = UIEdgeInsetsMake(0, 0, 0, CGRectGetWidth(self.bounds));
     
-    
 }
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+    if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
+        /* It's compact! */
+        [self.contentView removeConstraints:self.horizontallyRegularConstraints];
+        [self.contentView addConstraints:self.horizontallyCompactConstraints];
+        
+    } else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        /* It's regular */
+        [self.contentView removeConstraints:self.horizontallyCompactConstraints];
+        [self.contentView addConstraints:self.horizontallyRegularConstraints];
+    }
+}
+
 
 
 // When overriding a setter or getter method for a property you must refer to the implicitly generated IVAR
@@ -360,6 +424,7 @@ static NSParagraphStyle *paragraphStyle;
 {
     [self.commentView stopComposingComment];
 }
+
 
 
 
