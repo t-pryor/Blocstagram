@@ -11,6 +11,9 @@
 		2220564C1B0CBD3E006A3E51 /* CropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2220564B1B0CBD3E006A3E51 /* CropImageViewController.m */; };
 		2220564F1B0CE6B9006A3E51 /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2220564E1B0CE6B9006A3E51 /* ImageLibraryViewController.m */; };
 		22295F271B13966F00746840 /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22295F261B13966F00746840 /* PostToInstagramViewController.m */; };
+		223BA53F1B25CB6C008A46CD /* CommentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 223BA53E1B25CB6C008A46CD /* CommentTests.m */; };
+		223BA5411B25F9E2008A46CD /* ComposeCommentViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 223BA5401B25F9E2008A46CD /* ComposeCommentViewTests.m */; };
+		223BA5431B2625D6008A46CD /* MediaTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 223BA5421B2625D6008A46CD /* MediaTableViewCellTests.m */; };
 		2250AE3D1AE81DFC00E2D058 /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2250AE3C1AE81DFC00E2D058 /* MediaFullScreenViewController.m */; };
 		225437421AD435BA00C73EE3 /* NOTES-MVC in Resources */ = {isa = PBXBuildFile; fileRef = 225437411AD435BA00C73EE3 /* NOTES-MVC */; };
 		225437451AD448D800C73EE3 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 225437441AD448D800C73EE3 /* User.m */; };
@@ -42,6 +45,7 @@
 		22C28DC71AFE5D870077D2B7 /* UIImage+ImageUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C28DC61AFE5D870077D2B7 /* UIImage+ImageUtilities.m */; };
 		22C371B71B02D4DF00CD3917 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C371B61B02D4DF00CD3917 /* CameraViewController.m */; };
 		22D06F4D1B21232200F74D53 /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D06F4C1B21232100F74D53 /* UserTests.m */; };
+		22D06F4F1B212A6100F74D53 /* MediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22D06F4E1B212A6100F74D53 /* MediaTests.m */; };
 		22E079871AF05D1200CC279B /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E079861AF05D1200CC279B /* CircleSpinnerView.m */; };
 		22E0798A1AF069B900CC279B /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 22E079891AF069B900CC279B /* LikeButton.m */; };
 		96315BF031CF25D3C88DD586 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3B0BA0189E29FF2050022A /* libPods.a */; };
@@ -67,6 +71,9 @@
 		2220564E1B0CE6B9006A3E51 /* ImageLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLibraryViewController.m; sourceTree = "<group>"; };
 		22295F251B13966F00746840 /* PostToInstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostToInstagramViewController.h; sourceTree = "<group>"; };
 		22295F261B13966F00746840 /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
+		223BA53E1B25CB6C008A46CD /* CommentTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTests.m; sourceTree = "<group>"; };
+		223BA5401B25F9E2008A46CD /* ComposeCommentViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeCommentViewTests.m; sourceTree = "<group>"; };
+		223BA5421B2625D6008A46CD /* MediaTableViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCellTests.m; sourceTree = "<group>"; };
 		2250AE3B1AE81DFC00E2D058 /* MediaFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullScreenViewController.h; sourceTree = "<group>"; };
 		2250AE3C1AE81DFC00E2D058 /* MediaFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullScreenViewController.m; sourceTree = "<group>"; };
 		225437411AD435BA00C73EE3 /* NOTES-MVC */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "NOTES-MVC"; sourceTree = "<group>"; };
@@ -116,6 +123,7 @@
 		22C371B51B02D4DF00CD3917 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		22C371B61B02D4DF00CD3917 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		22D06F4C1B21232100F74D53 /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
+		22D06F4E1B212A6100F74D53 /* MediaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTests.m; sourceTree = "<group>"; };
 		22E079851AF05D1200CC279B /* CircleSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSpinnerView.h; sourceTree = "<group>"; };
 		22E079861AF05D1200CC279B /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
 		22E079881AF069B900CC279B /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
@@ -237,8 +245,12 @@
 			isa = PBXGroup;
 			children = (
 				22AEC30C1AD3144000E08389 /* BlocstagramTests.m */,
-				22AEC30A1AD3144000E08389 /* Supporting Files */,
+				223BA53E1B25CB6C008A46CD /* CommentTests.m */,
 				22D06F4C1B21232100F74D53 /* UserTests.m */,
+				22D06F4E1B212A6100F74D53 /* MediaTests.m */,
+				223BA5401B25F9E2008A46CD /* ComposeCommentViewTests.m */,
+				223BA5421B2625D6008A46CD /* MediaTableViewCellTests.m */,
+				22AEC30A1AD3144000E08389 /* Supporting Files */,
 			);
 			path = BlocstagramTests;
 			sourceTree = "<group>";
@@ -451,8 +463,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				223BA5431B2625D6008A46CD /* MediaTableViewCellTests.m in Sources */,
+				22D06F4F1B212A6100F74D53 /* MediaTests.m in Sources */,
 				22D06F4D1B21232200F74D53 /* UserTests.m in Sources */,
 				22AEC30D1AD3144000E08389 /* BlocstagramTests.m in Sources */,
+				223BA53F1B25CB6C008A46CD /* CommentTests.m in Sources */,
+				223BA5411B25F9E2008A46CD /* ComposeCommentViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

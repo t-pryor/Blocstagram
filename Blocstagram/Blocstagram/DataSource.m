@@ -298,6 +298,7 @@
     // feedDictionary[@"data"] is an array containing data about an individual picture
     // each element in the mediaArray is a Dictionary
     NSArray *mediaArray = feedDictionary[@"data"];
+    NSLog(@"mediaArray JSON: %@", mediaArray);
     
     NSMutableArray *tmpMediaItems = [NSMutableArray array];
   

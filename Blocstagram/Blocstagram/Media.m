@@ -14,7 +14,6 @@
 - (instancetype)initWithDictionary:(NSDictionary *)mediaDictionary
 {
     
-    
     if (self) {
         self.idNumber = mediaDictionary[@"id"];
         self.user = [[User alloc] initWithDictionary:mediaDictionary[@"user"]];
